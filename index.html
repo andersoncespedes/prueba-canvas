@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayuda</title>
+    <style>
+    body{
+        height: 100vh;
+        display: flex;
+    }
+        canvas{
+            width: 50%;
+            margin: auto;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas">
+    </canvas>
+    <script>
+        class Over{
+            constructor(params, obj){
+                this.canvas = params.canvas;
+                this.ctx = params.ctx;
+                this.obj = obj;
+                this.x = -600;
+                this.y = -10;
+                this.textIndex = 0;
+                this.text = ""
+            }
+            drawMonster(){
+                let image = new Image();
+                let count = 0
+                    image.onload = () => {
+                        image.height;
+                        image.width;
+                        this.ctx.drawImage(image, this.x, this.y,image.width,image.height);
+                        
+                        count++
+                        }
+                     image.src = "Real-Monster-PNG-Clipart.png"    
+            }
+            draw(){
+            const a = () => {
+                let image = new Image();
+                this.ctx.clearRect( 0, 0,image.width,image.height);
+                        image.onload = () => {
+                            this.ctx.canvas.width = image.width;
+                            this.ctx.canvas.height = image.height;
+                            this.ctx.drawImage(image, 0, 0,image.width,image.height);
+                            this.drawMonster()
+                        }
+                        if(this.x < 50){
+                            this.x +=4
+                        }
+                        else if(this.x >= 50 && this.y < 50){
+                            this.y += 2
+                        }
+                        else{
+                            
+                            let int = 'come mierda mamahuevo, \nte quiero muerto jodidopedazo de mierda jodete'.split("");
+                            if(int.length > this.textIndex){
+                                this.text += int[this.textIndex]
+                            }
+                            this.ctx.font = "bold 50px serif";
+                            this.ctx.fillStyle = "black";
+                            this.ctx.fillRect(0,this.canvas.height - 200,this.canvas.width,200)
+                            this.ctx.fillStyle = "yellow";
+                            this.ctx.fillText(this.text,100,this.canvas.height -100);
+                            this.textIndex +=1;
+                        }
+                    requestAnimationFrame(a)
+                    image.src = this.obj.src;
+                }
+                requestAnimationFrame(a)
+            }
+            init(){
+                this.draw()
+            }
+        }
+        let canvas = document.getElementById("canvas")
+        const over = new Over({canvas:canvas, ctx:canvas.getContext("2d")}, {src:"shutterstock_96456725.jpg"})
+        over.init()
+    </script>
+</body>
+</html>
