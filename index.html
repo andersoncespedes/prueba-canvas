@@ -25,50 +25,85 @@
                 this.canvas = params.canvas;
                 this.ctx = params.ctx;
                 this.obj = obj;
-                this.x = -600;
-                this.y = -10;
+                this.scene = 0;
+                this.monsters = {
+                    monstruo1:{
+                        active:false,
+                        x:-600,
+                        y:-10,
+                        dialog:[
+                        "te quiro mucho uwu besame", 
+                        "maldito miserable", 
+                        "como te atrevez a hablarme asi", 
+                        "MUERE!!!!!!!!!"],
+                        scene:() => {
+                            if(this.monsters["monstruo1"].x != 40){
+                                this.monsters["monstruo1"].x +=10
+                        }
+                        else if(this.monsters["monstruo1"].x == 10 && this.monsters["monstruo1"].y == 50){
+                            this.monsters["monstruo1"].x += 2
+                        }
+                        else{
+                            this.monsters["monstruo1"].active = true
+                        }
+                        }
+                    },
+                    monstruo2:{
+                        active:false,
+                        x:600,
+                        y:10,
+                        dialog:[
+                        "detente animal",
+                        "no te lo permitire miserable", 
+                        "tienes que ayudarme ",
+                        "hay algo raro", 
+                        "tienes que ir a la fortaleza de tu madre"],
+                        scene:() => {
+                            if(this.monsters["monstruo2"].x >= 100){
+                                this.monsters["monstruo2"].x -=10
+                            }
+                            else if(this.monsters["monstruo2"].x <= 100 && this.monsters["monstruo2"].y >= 50){
+                                this.monsters["monstruo2"].y -= 2
+                            }
+                            else{
+                                this.monsters["monstruo2"].active = true
+                            }
+                        }
+                        },
+                        dialogo:{
+                            active:true,
+                                dialog:[
+                            "Los huevones se fueron a la fortaleza",
+                            "Descubrieron algo increible", 
+                            "La muerte se olia",
+                            "Las calamidades de la muerte", 
+                            "*AAAAAAAHHHHHHHHHHH*"],
+                            scene:() => {
+                                this.monsters["dialogo"].active = true
+                            }
+                            }
+                }
                 this.textIndex = 0;
                 this.text = ""
                 this.dialog = 0;
                 this.dialogX = 100;
             }
-            drawMonster(){
-                let image = new Image();
-                let count = 0
-                    image.onload = () => {
-                        image.height;
-                        image.width;
-                        this.ctx.drawImage(image, this.x, this.y,image.width,image.height);
-                        
-                        count++
-                        }
-                     image.src = "Real-Monster-PNG-Clipart.png"    
-            }
-            draw(){
-            const a = () => {
-                let image = new Image();
-                this.ctx.clearRect( 0, 0,image.width,image.height);
-                        image.onload = () => {
-                            this.ctx.canvas.width = image.width;
-                            this.ctx.canvas.height = image.height;
-                            this.ctx.drawImage(image, 0, 0,image.width,image.height);
-                            this.drawMonster()
-                        }
-                        if(this.x < 50){
-                            this.x +=4
-                        }
-                        else if(this.x >= 50 && this.y < 50){
-                            this.y += 2
-                        }
-                        else{
-                            let arr = ["te quiro mucho uwu besame", "maldito miserable", "como te atrevez a hablarme asi", "MUERE!!!!!!!!!"]
+            generateMonster(monster){
+                        this.monsters[monster].scene()
+                        if(this.monsters[monster].active == true){
+                            if(this.monsters[monster].dialog.length <= this.dialog){
+                                this.scene +=1
+                                this.textIndex = 0;
+                                this.dialog = 0;
+                            }
+                            let arr = this.monsters[monster].dialog
                             let texto = arr[this.dialog].split("");
                             if(texto.length > this.textIndex){
                                 this.text += texto[this.textIndex]
                             }
                             else if (texto.length == this.textIndex){
                                 setTimeout(() => {
-                                    this.text = "\n"
+                                    this.text = ""
                                     this.dialog += 1;
                                     this.textIndex = 0;  
                                 }, 2000)
@@ -79,6 +114,51 @@
                             this.ctx.fillStyle = "yellow";
                             this.ctx.fillText(this.text ,20,this.canvas.height - this.dialogX );
                             this.textIndex +=1;
+                        
+                        }
+                    
+            }
+            drawMonster(param, monster){
+                let image = new Image();
+                let count = 0;
+                if(monster != "dialogo"){
+                    image.onload = () => {
+                        image.height;
+                        image.width;
+                        
+                            this.ctx.drawImage(image, this.monsters[monster].x, this.monsters[monster].y,image.width,image.height);
+                       
+                        
+                        count++
+                        this.generateMonster(monster)
+                        }
+                     image.src = param  
+                 }   
+                 else{
+                    this.generateMonster(monster)
+                 
+                 }
+            }
+            draw(){
+            const a = () => {
+                let image = new Image();
+                this.ctx.clearRect( 0, 0,image.width,image.height);
+                        image.onload = () => {
+                            this.ctx.canvas.width = image.width;
+                            this.ctx.canvas.height = image.height;
+                            this.ctx.drawImage(image, 0, 0,image.width,image.height);
+                            if(this.scene == 0){
+                                this.drawMonster("Real-Monster-PNG-Clipart.png", "monstruo1" )
+                            }
+                            else if(this.scene == 1){
+                                this.drawMonster("pngegg.png", "monstruo2")
+                            }
+                            else if (this.scene == 2){
+                                this.drawMonster("", "dialogo");
+                            }
+                            
+                    
+                           
                         }
                     requestAnimationFrame(a)
                     image.src = this.obj.src;
