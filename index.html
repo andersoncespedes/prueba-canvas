@@ -18,8 +18,7 @@
     </style>
 </head>
 <body>
-    <canvas id="canvas">
-    </canvas>
+    <canvas id="canvas"></canvas>
     <script>
         class Over{
             constructor(params, obj){
@@ -30,6 +29,8 @@
                 this.y = -10;
                 this.textIndex = 0;
                 this.text = ""
+                this.dialog = 0;
+                this.dialogX = 100;
             }
             drawMonster(){
                 let image = new Image();
@@ -60,16 +61,23 @@
                             this.y += 2
                         }
                         else{
-                            
-                            let int = 'come mierda mamahuevo, \nte quiero muerto jodidopedazo de mierda jodete'.split("");
-                            if(int.length > this.textIndex){
-                                this.text += int[this.textIndex]
+                            let arr = ["te quiro mucho uwu besame", "maldito miserable", "como te atrevez a hablarme asi", "MUERE!!!!!!!!!"]
+                            let texto = arr[this.dialog].split("");
+                            if(texto.length > this.textIndex){
+                                this.text += texto[this.textIndex]
                             }
-                            this.ctx.font = "bold 50px serif";
-                            this.ctx.fillStyle = "black";
+                            else if (texto.length == this.textIndex){
+                                setTimeout(() => {
+                                    this.text = "\n"
+                                    this.dialog += 1;
+                                    this.textIndex = 0;  
+                                }, 2000)
+                            }
+                            this.ctx.font = "bold 30px serif";
+                            this.ctx.fillStyle = "rgba(0,0,0,0.7)";
                             this.ctx.fillRect(0,this.canvas.height - 200,this.canvas.width,200)
                             this.ctx.fillStyle = "yellow";
-                            this.ctx.fillText(this.text,100,this.canvas.height -100);
+                            this.ctx.fillText(this.text ,20,this.canvas.height - this.dialogX );
                             this.textIndex +=1;
                         }
                     requestAnimationFrame(a)
