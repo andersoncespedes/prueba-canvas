@@ -11,7 +11,8 @@
         display: flex;
     }
         canvas{
-            width: 50%;
+            width: 800px;
+            height: 500px;
             margin: auto;
             border: 2px solid black;
         }
@@ -22,9 +23,12 @@
     <script>
         class Over{
             constructor(params, obj){
+                this.gameActive = false;
                 this.canvas = params.canvas;
                 this.ctx = params.ctx;
                 this.obj = obj;
+                this.imageBackX = 0;
+                this.imageBackY = 0;
                 this.scene = 0;
                 this.monsters = {
                     monstruo1:{
@@ -80,6 +84,9 @@
                             "*AAAAAAAHHHHHHHHHHH*"],
                             scene:() => {
                                 this.monsters["dialogo"].active = true
+                                this.active = true
+                                this.imageBackX +=1 
+                                this.imageBackY +=1 
                             }
                             }
                 }
@@ -89,15 +96,16 @@
                 this.dialogX = 100;
             }
             drawButton(){
-                this.ctx.fillStyle = "blue";
-                this.ctx.fillRect(100, 100, 150, 50);
-                this.ctx.font = "20px Arial";
-                this.ctx.fillStyle = "white";
-                this.ctx.fillText("hola como estas", 100 + 150/2, 100 + 50/2);
-
+            if(this.gameActive == true){
+                    this.ctx.fillStyle = "blue";
+                    this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
+                    this.ctx.font = "20px Arial";
+                    this.ctx.fillStyle = "white";
+                    this.ctx.textAlign = "center";
+                    this.ctx.fillText("Ataque", 83, canvas.height - 45);
+                }
             }
             generateMonster(monster){
-                this.drawButton()
                         this.monsters[monster].scene()
                         if(this.monsters[monster].active == true){
                             if(this.monsters[monster].dialog.length <= this.dialog){
@@ -123,8 +131,7 @@
                             this.ctx.fillRect(0,this.canvas.height - 200,this.canvas.width,200)
                             this.ctx.fillStyle = "yellow";
                             this.ctx.fillText(this.text ,20,this.canvas.height - this.dialogX );
-                            this.textIndex +=1;
-                        
+                            if(this.gameActive == false) this.textIndex +=1;
                         }
                     
             }
@@ -157,7 +164,7 @@
                         image.onload = () => {
                             this.ctx.canvas.width = image.width;
                             this.ctx.canvas.height = image.height;
-                            this.ctx.drawImage(image, 0, 0,image.width,image.height);
+                            this.ctx.drawImage(image, 0, 0,image.width + this.imageBackX,image.height + this.imageBackY);
                             if(this.scene == 0){
                                 this.drawMonster("Real-Monster-PNG-Clipart.png", "monstruo1" )
                             }
@@ -167,6 +174,14 @@
                             else if (this.scene == 2){
                                 this.drawMonster("", "dialogo");
                             }
+                            else if (this.scene == 3){
+                                this.drawButton()
+                                this.gameActive = true;
+                                this.imageBackX =0
+                                this.imageBackY =0
+                                this.obj.src = "ruins2.png"
+                                
+                            }
                         }
                     requestAnimationFrame(a)
                     image.src = this.obj.src;
@@ -175,14 +190,25 @@
             }
             init(){
                 this.draw()
+                this.canvas.addEventListener("mousemove", (event) => {
+                    var rect = this.canvas.getBoundingClientRect();
+                    var x = event.clientX - rect.left;
+                    var y = event.clientY - rect.top;
+                    if (x > 100 && x < 250 && y > 350 && y < 450 ) {
+                        this.ctx.fillStyle = "green";
+                        this.canvas.style.cursor = "pointer";
+                    }
+                    else{
+                        this.canvas.style.cursor = "default";
+                    }
+                })
                 this.canvas.addEventListener("click", (event) =>{
-                var rect = this.canvas.getBoundingClientRect();
-                var x = event.clientX - rect.left;
-                var y = event.clientY - rect.top;
-                if (x > 100 && x < 250 && y > 100 && y < 150) {
-                
-                alert("Button clicked!");
-                }
+                    var rect = this.canvas.getBoundingClientRect();
+                    var x = event.clientX - rect.left;
+                    var y = event.clientY - rect.top;
+                    if (x > 100 && x < 250 && y > 350 && y < 450 ) {
+                        alert("Button clicked!");
+                    }
             });
             }
         }
