@@ -88,7 +88,16 @@
                 this.dialog = 0;
                 this.dialogX = 100;
             }
+            drawButton(){
+                this.ctx.fillStyle = "blue";
+                this.ctx.fillRect(100, 100, 150, 50);
+                this.ctx.font = "20px Arial";
+                this.ctx.fillStyle = "white";
+                this.ctx.fillText("hola como estas", 100 + 150/2, 100 + 50/2);
+
+            }
             generateMonster(monster){
+                this.drawButton()
                         this.monsters[monster].scene()
                         if(this.monsters[monster].active == true){
                             if(this.monsters[monster].dialog.length <= this.dialog){
@@ -110,6 +119,7 @@
                             }
                             this.ctx.font = "bold 30px serif";
                             this.ctx.fillStyle = "rgba(0,0,0,0.7)";
+                            
                             this.ctx.fillRect(0,this.canvas.height - 200,this.canvas.width,200)
                             this.ctx.fillStyle = "yellow";
                             this.ctx.fillText(this.text ,20,this.canvas.height - this.dialogX );
@@ -138,6 +148,7 @@
                     this.generateMonster(monster)
                  
                  }
+                 
             }
             draw(){
             const a = () => {
@@ -156,9 +167,6 @@
                             else if (this.scene == 2){
                                 this.drawMonster("", "dialogo");
                             }
-                            
-                    
-                           
                         }
                     requestAnimationFrame(a)
                     image.src = this.obj.src;
@@ -167,6 +175,15 @@
             }
             init(){
                 this.draw()
+                this.canvas.addEventListener("click", (event) =>{
+                var rect = this.canvas.getBoundingClientRect();
+                var x = event.clientX - rect.left;
+                var y = event.clientY - rect.top;
+                if (x > 100 && x < 250 && y > 100 && y < 150) {
+                
+                alert("Button clicked!");
+                }
+            });
             }
         }
         let canvas = document.getElementById("canvas")
