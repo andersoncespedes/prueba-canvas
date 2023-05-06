@@ -23,6 +23,7 @@
     <script>
         class Over{
             constructor(params, obj){
+                this.activeBlade = false;
                 this.gameActive = false;
                 this.canvas = params.canvas;
                 this.ctx = params.ctx;
@@ -95,6 +96,16 @@
                 this.dialog = 0;
                 this.dialogX = 100;
             }
+             atackAnimation(){
+                    if(this.activeBlade == true){
+                       let image = new Image();
+                        image.onload =() => {
+                            this.ctx.drawImage(image, 30, 40,20,30);
+                        }
+
+                        image.src = "pngwing.com.png" 
+                    }
+            }
             drawButton(){
             if(this.gameActive == true){
                     this.ctx.fillStyle = "blue";
@@ -123,7 +134,7 @@
                                     this.text = ""
                                     this.dialog += 1;
                                     this.textIndex = 0;  
-                                }, 2000)
+                                }, 1)
                             }
                             this.ctx.font = "bold 30px serif";
                             this.ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -144,8 +155,6 @@
                         image.width;
                         
                             this.ctx.drawImage(image, this.monsters[monster].x, this.monsters[monster].y,image.width,image.height);
-                       
-                        
                         count++
                         this.generateMonster(monster)
                         }
@@ -190,6 +199,7 @@
             }
             init(){
                 this.draw()
+                this.atackAnimation()
                 this.canvas.addEventListener("mousemove", (event) => {
                     var rect = this.canvas.getBoundingClientRect();
                     var x = event.clientX - rect.left;
@@ -202,12 +212,14 @@
                         this.canvas.style.cursor = "default";
                     }
                 })
-                this.canvas.addEventListener("click", (event) =>{
+                
+                this.canvas.addEventListener("click", async (event) =>{
                     var rect = this.canvas.getBoundingClientRect();
                     var x = event.clientX - rect.left;
                     var y = event.clientY - rect.top;
                     if (x > 100 && x < 250 && y > 350 && y < 450 ) {
-                        alert("Button clicked!");
+                        this.activeBlade = true;
+                    
                     }
             });
             }
