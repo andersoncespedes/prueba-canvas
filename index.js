@@ -2,6 +2,8 @@ class Over extends generate{
     constructor(params, obj){
         super()
         this.activeBlade = false;
+        this.bladeX  = 30;
+        this.bladeY = 40;
         this.gameActive = false;
         this.canvas = params.canvas;
         this.ctx = params.ctx;
@@ -18,12 +20,14 @@ class Over extends generate{
         if(this.activeBlade == true){
             let image = new Image();
             image.onload =() => {
-                this.ctx.drawImage(image, 30, 40,20,30);
+                this.ctx.drawImage(image, this.bladeX, this.bladeY,20,30);
             }
             image.src = "pngwing.com.png" 
+            this.bladeX += 2;
         }
         else{
-            this.ctx.clearRect(0, 0, image.width, image.height)
+            this.ctx.clearRect(0, 0, image.width, image.height);
+            
         }
     }
 
@@ -79,6 +83,7 @@ class Over extends generate{
                     
                     setTimeout(() => {
                         this.activeBlade = false;
+                        this.bladeX = 30;
                      }, 4000)
                 }
         });
