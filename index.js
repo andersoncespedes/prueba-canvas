@@ -15,15 +15,26 @@ class Over extends generate{
         this.text = ""
         this.dialog = 0;
         this.dialogX = 100;
+        this.currentFrame = 1;
     }
      atackAnimation(){
         if(this.activeBlade == true){
             let image = new Image();
+            var frameWidth = 173; // ancho de cada fotograma en píxeles
+            var frameHeight = 530; // alto de cada fotograma en píxeles
+            var totalFrames = 9; // número total de fotogramas en la animación
+            var animationSpeed = 100; // 
+            if (this.currentFrame >= totalFrames) {
+                this.currentFrame = 0; // Reiniciar la animación al llegar al último fotograma
+              }
+              // Dibujar el fotograma actual
+              var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
             image.onload =() => {
-                this.ctx.drawImage(image, this.bladeX, this.bladeY,20,30);
+                this.ctx.drawImage(image, frameX, 590, frameWidth, frameHeight, 40, 0, frameWidth, frameHeight);
             }
-            image.src = "pngwing.com.png" 
+            image.src = "a1.png" 
             this.bladeX += 2;
+            this.currentFrame+=.7;
         }
         else{
             this.ctx.clearRect(0, 0, image.width, image.height);
