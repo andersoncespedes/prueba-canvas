@@ -1,6 +1,8 @@
 class Over extends generate{
     constructor(params, obj){
         super()
+        this.personaje = new Character;
+        this.statsPersonaje = this.personaje.stdist;
         this.activeBlade = false;
         this.bladeX  = 30;
         this.bladeY = 40;
@@ -41,14 +43,19 @@ class Over extends generate{
         if(this.gameActive == true){
                 this.ctx.fillStyle = "blue";
                 this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
+                this.ctx.fillStyle = "red";
+                this.ctx.strokeRect(40, this.canvas.height - 50 - 20, 100, 30);
                 this.ctx.font = "20px Arial";
                 this.ctx.fillStyle = "white";
                 this.ctx.textAlign = "center";
                 this.ctx.fillText("Ataque", 83, canvas.height - 45);
                 this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
+                this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
+                
                 this.ctx.fillStyle = "black";
-                this.ctx.fillText("HP:50/50", 175, canvas.height - 45);
-                this.ctx.fillText("PP:20/20", 175, canvas.height - 20);
+                this.ctx.font = "15px Arial";
+                this.ctx.fillText(`HP:50/${this.statsPersonaje.vit}`, 175, canvas.height - 45);
+                this.ctx.fillText(`PP:20/${this.statsPersonaje.pp}`, 175, canvas.height - 20);
             }
     }
     draw(){
@@ -88,9 +95,9 @@ class Over extends generate{
                 var rect = this.canvas.getBoundingClientRect();
                 var x = event.clientX - rect.left;
                 var y = event.clientY - rect.top;
-                if (x > 100 && x < 250 && y > 350 && y < 450 ) {
+                if (x > 100 && x < 350 && y > 360 && y < 450 ) {
                     this.activeBlade = true;
-                    
+                    this.personaje.dagno = 3;
                     setTimeout(() => {
                         this.activeBlade = false;
                         this.currentFrame = 0;
@@ -102,7 +109,7 @@ class Over extends generate{
             var rect = this.canvas.getBoundingClientRect();
             var x = event.clientX - rect.left;
             var y = event.clientY - rect.top;
-            if (x > 100 && x < 250 && y > 350 && y < 450 ) {
+            if (x > 100 && x < 330 && y > 360 && y < 450 ) {
                 this.ctx.fillStyle = "green";
                 this.canvas.style.cursor = "pointer";
             }
