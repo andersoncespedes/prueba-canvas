@@ -15,12 +15,12 @@ class Over extends generate{
         this.text = ""
         this.dialog = 0;
         this.dialogX = 100;
-        this.currentFrame = 1;
+        this.currentFrame = 4;
     }
      atackAnimation(){
         if(this.activeBlade == true){
             let image = new Image();
-            var frameWidth = 173; // ancho de cada fotograma en píxeles
+            var frameWidth = 170- 48.9; // ancho de cada fotograma en píxeles
             var frameHeight = 530; // alto de cada fotograma en píxeles
             var totalFrames = 9; // número total de fotogramas en la animación
             var animationSpeed = 100; // 
@@ -30,27 +30,26 @@ class Over extends generate{
               // Dibujar el fotograma actual
               var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
             image.onload =() => {
-                this.ctx.drawImage(image, frameX, 590, frameWidth, frameHeight, 40, 0, frameWidth, frameHeight);
+                this.ctx.drawImage(image, frameX, 590, frameWidth , frameHeight - 30, 90, -30, frameWidth - 70, frameHeight);
             }
             image.src = "a1.png" 
-            this.bladeX += 2;
-            this.currentFrame+=.7;
-        }
-        else{
-            this.ctx.clearRect(0, 0, image.width, image.height);
-            
+            this.currentFrame+=1;
         }
     }
 
     drawButton(){
-    if(this.gameActive == true){
-            this.ctx.fillStyle = "blue";
-            this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
-            this.ctx.font = "20px Arial";
-            this.ctx.fillStyle = "white";
-            this.ctx.textAlign = "center";
-            this.ctx.fillText("Ataque", 83, canvas.height - 45);
-        }
+        if(this.gameActive == true){
+                this.ctx.fillStyle = "blue";
+                this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
+                this.ctx.font = "20px Arial";
+                this.ctx.fillStyle = "white";
+                this.ctx.textAlign = "center";
+                this.ctx.fillText("Ataque", 83, canvas.height - 45);
+                this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
+                this.ctx.fillStyle = "black";
+                this.ctx.fillText("HP:50/50", 175, canvas.height - 45);
+                this.ctx.fillText("PP:20/20", 175, canvas.height - 20);
+            }
     }
     draw(){
     const a = () => {
@@ -72,10 +71,10 @@ class Over extends generate{
                     }
                     else if (this.scene == 3){
                         this.drawButton()
+                        this.obj.src = "ruins2.png"
                         this.gameActive = true;
                         this.imageBackX =0
                         this.imageBackY =0
-                        this.obj.src = "ruins2.png"
                         this.atackAnimation()
                     }
                 }
@@ -94,8 +93,9 @@ class Over extends generate{
                     
                     setTimeout(() => {
                         this.activeBlade = false;
+                        this.currentFrame = 0;
                         this.bladeX = 30;
-                     }, 4000)
+                     }, 200 )
                 }
         });
         this.canvas.addEventListener("mousemove", (event) => {
