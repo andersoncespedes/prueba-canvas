@@ -13,7 +13,4 @@ class Character{
     set dagno(param){
         this.stats.vit -= param * this.stats.fuerza;
     }
-    ataque(){
-        
-    }
 }

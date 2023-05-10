@@ -1,3 +1,4 @@
+
 class generate {
   constructor() {
     this.actual = "";
@@ -128,7 +129,6 @@ class generate {
     let image = new Image();
     let count = 0;
     if (monster != "dialogo") {
-      this.actions(monster);
       this.actual = monster;
       image.onload = () => {
         this.ctx.drawImage(

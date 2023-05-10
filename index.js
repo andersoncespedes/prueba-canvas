@@ -133,14 +133,15 @@ class Over extends generate {
     requestAnimationFrame(a);
   }
   actions() {
-    this.canvas.addEventListener("click", (event) => {
+    this.canvas.addEventListener("mousedown", (event) => {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
       if (x > 100 && x < 350 && y > 360 && y < 450) {
         this.activeBlade = true;
         setTimeout(() => {
-          
+            this.vit = 3
+          console.log(this.vit)
           this.activeBlade = false;
           this.currentFrame = 0;
           this.bladeX = 30;
@@ -162,8 +163,8 @@ class Over extends generate {
     });
   }
   init() {
-    this.actions();
     this.draw();
+    this.actions()
   }
 }
 let canvas = document.getElementById("canvas");
