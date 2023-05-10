@@ -30,15 +30,36 @@ class Over extends generate {
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
-    this.scene = 0;
+    this.scene = 2;
     this.textIndex = 0;
     this.text = "";
     this.dialog = 0;
     this.dialogX = 100;
     this.color = "blue";
     this.currentFrame = 4;
+    this.width = 100;
+  }
+  vitAnimation(param){
+    if(param){
+        this.width -= Math.floor((this.dagnoReal / 100) * 100) 
+    }
+    if(this.width <= 0){
+        this.width = 0;
+    }
+    this.ctx.fillStyle = "red";
+    this.ctx.globalAlpha = this.opacityMoster;
+    
+    this.ctx.strokeRect(80,30, 100,10)
+    
+    this.ctx.fillRect(80,30, this.width,10)
   }
   atackAnimation() {
+  this.vitAnimation()
+    if(this.vit <= 0){
+        this.opacityMoster -= .01
+        this.ctx.filter = 'hue-rotate(90deg)'
+    }
+    if(this.opacityMoster <= 0) this.opacityMoster = 0;
     if (this.activeBlade == true) {
       let image = new Image();
       var frameWidth = 170 - 48.9; // ancho de cada fotograma en píxeles
@@ -96,12 +117,14 @@ class Over extends generate {
     }
   }
   draw() {
+    
     const a = () => {
       let image = new Image();
       this.ctx.clearRect(0, 0, image.width, image.height);
       image.onload = () => {
         this.ctx.canvas.width = image.width;
         this.ctx.canvas.height = image.height;
+        this.ctx.globalAlpha = this.opacity;
         this.ctx.drawImage(
           image,
           0,
@@ -140,8 +163,8 @@ class Over extends generate {
       if (x > 100 && x < 350 && y > 360 && y < 450) {
         this.activeBlade = true;
         setTimeout(() => {
-            this.vit = 3
-          console.log(this.vit)
+          this.vit = 3
+          this.vitAnimation(true)
           this.activeBlade = false;
           this.currentFrame = 0;
           this.bladeX = 30;

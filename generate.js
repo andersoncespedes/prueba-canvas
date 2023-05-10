@@ -1,7 +1,13 @@
 
 class generate {
   constructor() {
+    this.termo = 20;
+    this.danoRec = 0;
     this.actual = "";
+    this.opacity = 1.0;
+    this.opacityMoster = 1.0;
+    this.velocidadText = 2;
+    this.recibir = false;
     this.monsters = {
       monstruo1: {
         vit: 50,
@@ -70,10 +76,12 @@ class generate {
           this.active = true;
           this.imageBackX += 1;
           this.imageBackY += 1;
+          this.opacity -= .001;
         },
       },
       monstruo3: {
         vit: 50,
+        vitMax:50,
         active: false,
         width: 120,
         height: 120,
@@ -81,6 +89,9 @@ class generate {
         y: 20,
         dialog: [],
         scene: () => {
+        if(this.opacity < .5){
+          this.opacity = 1;
+        }
           return false;
         },
       },
@@ -93,6 +104,9 @@ class generate {
     this.stats.vit -= param * this.stats.fuerza;
   }
   generateMonster(monster) {
+    if(this.recibir){
+      this.opacity -= 0.01;
+    }
     this.monsters[monster].scene();
     if (this.monsters[monster].active == true) {
       if (this.monsters[monster].dialog.length <= this.dialog) {
@@ -109,7 +123,7 @@ class generate {
           this.text = "";
           this.dialog += 1;
           this.textIndex = 0;
-        }, 1);
+        }, this.velocidadText * 1000);
       }
       this.ctx.font = "bold 30px serif";
       this.ctx.fillStyle = "rgba(0,0,0,0.7)";
@@ -122,15 +136,38 @@ class generate {
   get vit() {
     return this.monsters[this.actual].vit;
   }
+  get dagnoReal(){
+    return this.danoRec;
+  }
   set vit(param) {
     this.monsters[this.actual].vit -= param;
+    this.danoRec = Math.floor( (param / this.monsters[this.actual].vitMax) * 100 ) ;
   }
   drawMonster(param, monster) {
+  if(this.monsters[monster].active == false){
+    this.termo -= 0.1
+  }
+    
+    if(this.termo < 0){
+      this.recibir = true;
+      setTimeout(() => {
+        this.personaje.dagno = 3;
+        this.recibir = false
+        this.opacity = 1;
+        
+      },1000)
+        
+      
+      this.termo = 20
+    }
+    
     let image = new Image();
     let count = 0;
+    
     if (monster != "dialogo") {
       this.actual = monster;
       image.onload = () => {
+        this.ctx.globalAlpha = this.opacityMoster;
         this.ctx.drawImage(
           image,
           this.monsters[monster].x,
