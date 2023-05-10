@@ -1,8 +1,11 @@
 class generate {
   constructor() {
-    this.monsters = {
+    this.actual = this.monsters = {
       monstruo1: {
+        vit: 50,
         active: false,
+        height: 925,
+        width: 728,
         x: -600,
         y: -10,
         dialog: [
@@ -26,6 +29,9 @@ class generate {
       },
       monstruo2: {
         active: false,
+        vit: 50,
+        width: 640,
+        height: 628,
         x: 600,
         y: 10,
         dialog: [
@@ -65,9 +71,12 @@ class generate {
         },
       },
       monstruo3: {
+        vit: 50,
         active: false,
-        x: 50,
-        y: -40,
+        width: 120,
+        height: 120,
+        x: 83,
+        y: 20,
         dialog: [],
         scene: () => {
           return false;
@@ -96,26 +105,31 @@ class generate {
       }
       this.ctx.font = "bold 30px serif";
       this.ctx.fillStyle = "rgba(0,0,0,0.7)";
-
       this.ctx.fillRect(0, this.canvas.height - 200, this.canvas.width, 200);
       this.ctx.fillStyle = "yellow";
       this.ctx.fillText(this.text, 20, this.canvas.height - this.dialogX);
       if (this.gameActive == false) this.textIndex += 1;
     }
   }
+  get vit() {
+    return this.monsters[this.actual].vit;
+  }
+  set vit(param) {
+    this.monsters[this.actual].vit -= param;
+  }
   drawMonster(param, monster) {
     let image = new Image();
     let count = 0;
     if (monster != "dialogo") {
+      this.actions(monster);
+      this.actual = monster;
       image.onload = () => {
-        image.height;
-        image.width;
         this.ctx.drawImage(
           image,
           this.monsters[monster].x,
           this.monsters[monster].y,
-          image.width < 400 ? image.width : 120,
-          image.height < 400 ? image.height : 120
+          this.monsters[monster].width,
+          this.monsters[monster].height
         );
         count++;
         this.generateMonster(monster);

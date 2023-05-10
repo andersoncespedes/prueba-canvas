@@ -1,6 +1,24 @@
 class Over extends generate {
   constructor(params, obj) {
     super();
+    this.niveles = [
+      {
+        src: "Real-Monster-PNG-Clipart.png",
+        name: "monstruo1",
+      },
+      {
+        src: "pngegg.png",
+        name: "monstruo2",
+      },
+      {
+        src: "",
+        name: "dialogo",
+      },
+      {
+        src: "monster_amiba.png",
+        name: "monstruo3",
+      },
+    ];
     this.personaje = new Character();
     this.statsPersonaje = this.personaje.stdist;
     this.activeBlade = false;
@@ -91,14 +109,16 @@ class Over extends generate {
           image.width + this.imageBackX,
           image.height + this.imageBackY
         );
-        if (this.scene == 0) {
-          this.drawMonster("Real-Monster-PNG-Clipart.png", "monstruo1");
-        } else if (this.scene == 1) {
-          this.drawMonster("pngegg.png", "monstruo2");
-        } else if (this.scene == 2) {
-          this.drawMonster("", "dialogo");
+        if (this.scene != 3) {
+          this.drawMonster(
+            this.niveles[this.scene].src,
+            this.niveles[this.scene].name
+          );
         } else if (this.scene == 3) {
-          this.drawMonster("monster_amiba.png", "monstruo3");
+          this.drawMonster(
+            this.niveles[this.scene].src,
+            this.niveles[this.scene].name
+          );
           this.drawButton();
           this.obj.src = "ruins2.png";
           this.gameActive = true;
@@ -113,20 +133,19 @@ class Over extends generate {
     requestAnimationFrame(a);
   }
   actions() {
-    this.canvas.addEventListener("mousedown", (event) => {
+    this.canvas.addEventListener("click", (event) => {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
       if (x > 100 && x < 350 && y > 360 && y < 450) {
         this.activeBlade = true;
-
         setTimeout(() => {
+          
           this.activeBlade = false;
           this.currentFrame = 0;
           this.bladeX = 30;
-          this.personaje.dagno = 3;
         }, 300);
-      }
+      } 
     });
     this.canvas.addEventListener("mousemove", (event) => {
       var rect = this.canvas.getBoundingClientRect();
