@@ -1,6 +1,7 @@
 class generate {
   constructor() {
-    this.actual = this.monsters = {
+    this.actual = "";
+    this.monsters = {
       monstruo1: {
         vit: 50,
         active: false,
@@ -83,6 +84,12 @@ class generate {
         },
       },
     };
+  }
+  get stdist() {
+    return this.stats;
+  }
+  set dagno(param) {
+    this.stats.vit -= param * this.stats.fuerza;
   }
   generateMonster(monster) {
     this.monsters[monster].scene();
