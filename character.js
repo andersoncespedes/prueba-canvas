@@ -1,7 +1,9 @@
 class Character{
     constructor(){
         this.stats = {
-            vit:50,
+            maxvit:100,
+            vit:100,
+            maxpp:20,
             pp:20,
             fuerza:2
         }

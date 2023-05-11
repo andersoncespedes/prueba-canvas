@@ -30,7 +30,7 @@ class Over extends generate {
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
-    this.scene = 2;
+    this.scene = 3;
     this.textIndex = 0;
     this.text = "";
     this.dialog = 0;
@@ -38,6 +38,7 @@ class Over extends generate {
     this.color = "blue";
     this.currentFrame = 4;
     this.width = 100;
+    this.tempAtaque = true;
   }
   vitAnimation(param){
     if(param){
@@ -101,23 +102,22 @@ class Over extends generate {
       this.ctx.fillText("Ataque", 83, canvas.height - 45);
       this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
       this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
-
       this.ctx.fillStyle = "black";
       this.ctx.font = "15px Arial";
       this.ctx.fillText(
-        `HP:50/${this.statsPersonaje.vit}`,
+        `HP:${this.statsPersonaje.maxvit}/${this.statsPersonaje.vit}`,
         175,
         canvas.height - 45
       );
       this.ctx.fillText(
-        `PP:20/${this.statsPersonaje.pp}`,
+        `PP:${this.statsPersonaje.maxpp}/${this.statsPersonaje.pp}`,
         175,
         canvas.height - 20
       );
     }
   }
   draw() {
-    
+
     const a = () => {
       let image = new Image();
       this.ctx.clearRect(0, 0, image.width, image.height);
@@ -155,20 +155,29 @@ class Over extends generate {
     };
     requestAnimationFrame(a);
   }
+  temporizador(){
+    setTimeout(() => {
+            this.tempAtaque = true;
+          }, 4000)
+  }
   actions() {
     this.canvas.addEventListener("mousedown", (event) => {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
-      if (x > 100 && x < 350 && y > 360 && y < 450) {
+      if(this.tempAtaque == true){
+         if (x > 100 && x < 350 && y > 360 && y < 450) {
         this.activeBlade = true;
+        this.ataqueTemp = false;
         setTimeout(() => {
           this.vit = 3
           this.vitAnimation(true)
           this.activeBlade = false;
           this.currentFrame = 0;
-          this.bladeX = 30;
         }, 300);
+        this.temporizador()
+      }
+     
       } 
     });
     this.canvas.addEventListener("mousemove", (event) => {
@@ -185,9 +194,18 @@ class Over extends generate {
       }
     });
   }
+  get ataqueTemp(){
+    return this.tempAtaque;
+  }
+  set ataqueTemp(param){
+    this.tempAtaque = param
+  }
   init() {
+    
     this.draw();
-    this.actions()
+    this.actions();
+    
+    
   }
 }
 let canvas = document.getElementById("canvas");

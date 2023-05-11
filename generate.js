@@ -5,6 +5,7 @@ class generate {
     this.danoRec = 0;
     this.actual = "";
     this.opacity = 1.0;
+    
     this.opacityMoster = 1.0;
     this.velocidadText = 2;
     this.recibir = false;
@@ -43,7 +44,7 @@ class generate {
         x: 600,
         y: 10,
         dialog: [
-          "detente animal",
+          "  detente animal",
           "no te lo permitire miserable",
           "tienes que ayudarme ",
           "hay algo raro",
@@ -65,7 +66,7 @@ class generate {
       dialogo: {
         active: true,
         dialog: [
-          "Los huevones se fueron a la fortaleza",
+          "   Los huevones se fueron a la fortaleza",
           "Descubrieron algo increible",
           "La muerte se olia",
           "Las calamidades de la muerte",
@@ -85,6 +86,7 @@ class generate {
         active: false,
         width: 120,
         height: 120,
+        fuerza:3,
         x: 83,
         y: 20,
         dialog: [],
@@ -140,24 +142,21 @@ class generate {
     return this.danoRec;
   }
   set vit(param) {
-    this.monsters[this.actual].vit -= param;
-    this.danoRec = Math.floor( (param / this.monsters[this.actual].vitMax) * 100 ) ;
+    this.monsters[this.actual].vit -= param * this.monsters[this.actual].fuerza;
+    let a = param * this.monsters[this.actual].fuerza
+    this.danoRec = Math.floor( (a / this.monsters[this.actual].vitMax) * 100 ) ;
   }
   drawMonster(param, monster) {
   if(this.monsters[monster].active == false){
     this.termo -= 0.1
   }
-    
     if(this.termo < 0){
       this.recibir = true;
       setTimeout(() => {
         this.personaje.dagno = 3;
         this.recibir = false
         this.opacity = 1;
-        
       },1000)
-        
-      
       this.termo = 20
     }
     
