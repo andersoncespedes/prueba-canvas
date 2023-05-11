@@ -35,7 +35,9 @@ class Over extends generate {
     this.text = "";
     this.dialog = 0;
     this.dialogX = 100;
-    this.color = "blue";
+    this.colorAtaque = "blue";
+    this.colorMagia = "blue";
+    this.magiaPanel = false;
     this.currentFrame = 4;
     this.width = 100;
     this.tempAtaque = true;
@@ -92,14 +94,17 @@ class Over extends generate {
 
   drawButton() {
     if (this.gameActive == true) {
-      this.ctx.fillStyle = this.color;
+      this.ctx.fillStyle = this.colorAtaque;
       this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
-      this.ctx.fillStyle = "red";
       this.ctx.strokeRect(40, this.canvas.height - 50 - 20, 100, 30);
+      this.ctx.fillStyle = this.colorMagia;
+      this.ctx.fillRect(40, this.canvas.height - 20 - 20, 100, 30);
+      this.ctx.strokeRect(40, this.canvas.height - 20 - 20, 100, 30);
       this.ctx.font = "20px Arial";
       this.ctx.fillStyle = "white";
       this.ctx.textAlign = "center";
       this.ctx.fillText("Ataque", 83, canvas.height - 45);
+      this.ctx.fillText("Magia", 83, canvas.height - 16);
       this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
       this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
       this.ctx.fillStyle = "black";
@@ -114,10 +119,16 @@ class Over extends generate {
         175,
         canvas.height - 20
       );
+      if(this.magiaPanel == true){
+        this.ctx.fillStyle = "blue";
+        this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
+        this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
+      }
+      
     }
   }
   draw() {
-
+    
     const a = () => {
       let image = new Image();
       this.ctx.clearRect(0, 0, image.width, image.height);
@@ -166,7 +177,7 @@ class Over extends generate {
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
       if(this.tempAtaque == true){
-         if (x > 100 && x < 350 && y > 360 && y < 450) {
+         if (x > 100 && x < 350 && y > 360 && y < 450 && this.magiaPanel != true) {
         this.activeBlade = true;
         this.ataqueTemp = false;
         setTimeout(() => {
@@ -176,6 +187,8 @@ class Over extends generate {
           this.currentFrame = 0;
         }, 300);
         this.temporizador()
+      }else if(x > 100 && x < 330 && y > 430 && y < 520 && this.magiaPanel != true){
+        this.magiaPanel = true;
       }
      
       } 
@@ -184,12 +197,16 @@ class Over extends generate {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
-      if (x > 100 && x < 330 && y > 360 && y < 450) {
-        this.color = "red";
-        this.ctx.fillStyle = "green";
+      if (x > 100 && x < 330 && y > 360 && y < 420 && this.magiaPanel != true) {
+        this.colorAtaque = "red";
         this.canvas.style.cursor = "pointer";
-      } else {
-        this.color = "blue";
+      } else if(x > 100 && x < 330 && y > 430 && y < 520 && this.magiaPanel != true){
+        this.colorMagia = "red";
+        this.canvas.style.cursor = "pointer";
+      }
+      else {
+        this.colorAtaque = "blue";
+        this.colorMagia = "blue";
         this.canvas.style.cursor = "default";
       }
     });

@@ -5,7 +5,7 @@ class generate {
     this.danoRec = 0;
     this.actual = "";
     this.opacity = 1.0;
-    
+    this.dagnoAnimation = 1;
     this.opacityMoster = 1.0;
     this.velocidadText = 2;
     this.recibir = false;
@@ -107,7 +107,9 @@ class generate {
   }
   generateMonster(monster) {
     if(this.recibir){
-      this.opacity -= 0.01;
+      this.ctx.fillStyle = "red"
+      this.ctx.globalAlpha = this.dagnoAnimation;
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
     this.monsters[monster].scene();
     if (this.monsters[monster].active == true) {
@@ -156,7 +158,7 @@ class generate {
         this.personaje.dagno = 3;
         this.recibir = false
         this.opacity = 1;
-      },1000)
+      },100)
       this.termo = 20
     }
     
