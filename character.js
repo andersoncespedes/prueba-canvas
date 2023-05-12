@@ -11,14 +11,22 @@ class Character {
         {
           nombre: "fuego",
           poder: 4,
+          color:"blue",
           posicionX: 160,
-          posicionY: 45,
+          posicionY: 195,
+          posicionCanX:139,
+          width:40,
+          height:30
         },
         {
           nombre: "hielo",
           poder: 4,
+          color:"blue",
           posicionX: 200,
-          posicionY: 45,
+          posicionY: 195,
+          posicionCanX:180,
+          width:40,
+          height:30
         },
       ],
     };

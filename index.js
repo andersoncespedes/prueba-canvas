@@ -128,8 +128,24 @@ class Over extends generate {
           this.ctx.fillText(
             `${e["nombre"]}`,
             e["posicionX"],
-            canvas.height - e["posicionY"]
+            e["posicionY"]
           );
+          this.ctx.fillStyle = e["color"];
+          this.ctx.fillRect(e["posicionCanX"] , e["posicionY"] - 20 ,e["width"],e["height"])
+          this.ctx.strokeRect(e["posicionCanX"] , e["posicionY"] - 20 ,e["width"],e["height"])
+          this.canvas.addEventListener("mousemove", (event) => {
+            var rect = this.canvas.getBoundingClientRect();
+            var x = event.clientX - rect.left;
+            var y = event.clientY - rect.top;
+            if (x > e["posicionCanX"] + 230&& x < e["posicionCanX"]+ e["width"] + 230 && y > 360 && y < 420 && this.magiaPanel == true) {
+              e["color"] = "red";
+              this.canvas.style.cursor = "pointer";
+            } 
+            else{
+              e["color"] = "blue";
+              
+            }
+          })
         });
       }
     }
