@@ -1,4 +1,3 @@
-
 class generate {
   constructor() {
     this.termo = 20;
@@ -77,23 +76,23 @@ class generate {
           this.active = true;
           this.imageBackX += 1;
           this.imageBackY += 1;
-          this.opacity -= .001;
+          this.opacity -= 0.001;
         },
       },
       monstruo3: {
         vit: 50,
-        vitMax:50,
+        vitMax: 50,
         active: false,
         width: 120,
         height: 120,
-        fuerza:3,
+        fuerza: 3,
         x: 83,
         y: 20,
         dialog: [],
         scene: () => {
-        if(this.opacity < .5){
-          this.opacity = 1;
-        }
+          if (this.opacity < 0.5) {
+            this.opacity = 1;
+          }
           return false;
         },
       },
@@ -106,8 +105,8 @@ class generate {
     this.stats.vit -= param * this.stats.fuerza;
   }
   generateMonster(monster) {
-    if(this.recibir){
-      this.ctx.fillStyle = "red"
+    if (this.recibir) {
+      this.ctx.fillStyle = "red";
       this.ctx.globalAlpha = this.dagnoAnimation;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
@@ -140,31 +139,31 @@ class generate {
   get vit() {
     return this.monsters[this.actual].vit;
   }
-  get dagnoReal(){
+  get dagnoReal() {
     return this.danoRec;
   }
   set vit(param) {
     this.monsters[this.actual].vit -= param * this.monsters[this.actual].fuerza;
-    let a = param * this.monsters[this.actual].fuerza
-    this.danoRec = Math.floor( (a / this.monsters[this.actual].vitMax) * 100 ) ;
+    let a = param * this.monsters[this.actual].fuerza;
+    this.danoRec = Math.floor((a / this.monsters[this.actual].vitMax) * 100);
   }
   drawMonster(param, monster) {
-  if(this.monsters[monster].active == false){
-    this.termo -= 0.1
-  }
-    if(this.termo < 0){
+    if (this.monsters[monster].active == false) {
+      this.termo -= 0.1;
+    }
+    if (this.termo < 0) {
       this.recibir = true;
       setTimeout(() => {
         this.personaje.dagno = 3;
-        this.recibir = false
+        this.recibir = false;
         this.opacity = 1;
-      },100)
-      this.termo = 20
+      }, 100);
+      this.termo = 20;
     }
-    
+
     let image = new Image();
     let count = 0;
-    
+
     if (monster != "dialogo") {
       this.actual = monster;
       image.onload = () => {

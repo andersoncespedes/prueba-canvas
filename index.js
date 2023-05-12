@@ -42,27 +42,27 @@ class Over extends generate {
     this.width = 100;
     this.tempAtaque = true;
   }
-  vitAnimation(param){
-    if(param){
-        this.width -= Math.floor((this.dagnoReal / 100) * 100) 
+  vitAnimation(param) {
+    if (param) {
+      this.width -= Math.floor((this.dagnoReal / 100) * 100);
     }
-    if(this.width <= 0){
-        this.width = 0;
+    if (this.width <= 0) {
+      this.width = 0;
     }
     this.ctx.fillStyle = "red";
     this.ctx.globalAlpha = this.opacityMoster;
-    
-    this.ctx.strokeRect(80,30, 100,10)
-    
-    this.ctx.fillRect(80,30, this.width,10)
+
+    this.ctx.strokeRect(80, 30, 100, 10);
+
+    this.ctx.fillRect(80, 30, this.width, 10);
   }
   atackAnimation() {
-  this.vitAnimation()
-    if(this.vit <= 0){
-        this.opacityMoster -= .01
-        this.ctx.filter = 'hue-rotate(90deg)'
+    this.vitAnimation();
+    if (this.vit <= 0) {
+      this.opacityMoster -= 0.01;
+      this.ctx.filter = "hue-rotate(90deg)";
     }
-    if(this.opacityMoster <= 0) this.opacityMoster = 0;
+    if (this.opacityMoster <= 0) this.opacityMoster = 0;
     if (this.activeBlade == true) {
       let image = new Image();
       var frameWidth = 170 - 48.9; // ancho de cada fotograma en píxeles
@@ -119,16 +119,22 @@ class Over extends generate {
         175,
         canvas.height - 20
       );
-      if(this.magiaPanel == true){
+      if (this.magiaPanel == true) {
         this.ctx.fillStyle = "blue";
         this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
         this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
+        this.personaje.stats.poderes.map((e) => {
+          this.ctx.fillStyle = "white";
+          this.ctx.fillText(
+            `${e["nombre"]}`,
+            e["posicionX"],
+            canvas.height - e["posicionY"]
+          );
+        });
       }
-      
     }
   }
   draw() {
-    
     const a = () => {
       let image = new Image();
       this.ctx.clearRect(0, 0, image.width, image.height);
@@ -166,32 +172,43 @@ class Over extends generate {
     };
     requestAnimationFrame(a);
   }
-  temporizador(){
+  temporizador() {
     setTimeout(() => {
-            this.tempAtaque = true;
-          }, 4000)
+      this.tempAtaque = true;
+    }, 4000);
   }
   actions() {
     this.canvas.addEventListener("mousedown", (event) => {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
-      if(this.tempAtaque == true){
-         if (x > 100 && x < 350 && y > 360 && y < 450 && this.magiaPanel != true) {
-        this.activeBlade = true;
-        this.ataqueTemp = false;
-        setTimeout(() => {
-          this.vit = 3
-          this.vitAnimation(true)
-          this.activeBlade = false;
-          this.currentFrame = 0;
-        }, 300);
-        this.temporizador()
-      }else if(x > 100 && x < 330 && y > 430 && y < 520 && this.magiaPanel != true){
-        this.magiaPanel = true;
+      if (this.tempAtaque == true) {
+        if (
+          x > 100 &&
+          x < 350 &&
+          y > 360 &&
+          y < 450 &&
+          this.magiaPanel != true
+        ) {
+          this.activeBlade = true;
+          this.ataqueTemp = false;
+          setTimeout(() => {
+            this.vit = 3;
+            this.vitAnimation(true);
+            this.activeBlade = false;
+            this.currentFrame = 0;
+          }, 300);
+          this.temporizador();
+        } else if (
+          x > 100 &&
+          x < 330 &&
+          y > 430 &&
+          y < 520 &&
+          this.magiaPanel != true
+        ) {
+          this.magiaPanel = true;
+        }
       }
-     
-      } 
     });
     this.canvas.addEventListener("mousemove", (event) => {
       var rect = this.canvas.getBoundingClientRect();
@@ -200,29 +217,31 @@ class Over extends generate {
       if (x > 100 && x < 330 && y > 360 && y < 420 && this.magiaPanel != true) {
         this.colorAtaque = "red";
         this.canvas.style.cursor = "pointer";
-      } else if(x > 100 && x < 330 && y > 430 && y < 520 && this.magiaPanel != true){
+      } else if (
+        x > 100 &&
+        x < 330 &&
+        y > 430 &&
+        y < 520 &&
+        this.magiaPanel != true
+      ) {
         this.colorMagia = "red";
         this.canvas.style.cursor = "pointer";
-      }
-      else {
+      } else {
         this.colorAtaque = "blue";
         this.colorMagia = "blue";
         this.canvas.style.cursor = "default";
       }
     });
   }
-  get ataqueTemp(){
+  get ataqueTemp() {
     return this.tempAtaque;
   }
-  set ataqueTemp(param){
-    this.tempAtaque = param
+  set ataqueTemp(param) {
+    this.tempAtaque = param;
   }
   init() {
-    
     this.draw();
     this.actions();
-    
-    
   }
 }
 let canvas = document.getElementById("canvas");
