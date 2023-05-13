@@ -30,7 +30,7 @@ class Over extends generate {
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
-    this.scene = 1;
+    this.scene = 3;
     this.textIndex = 0;
     this.text = "";
     this.dialog = 0;

@@ -1,6 +1,6 @@
 class generate {
   constructor() {
-    this.termo = 20;
+    this.termo = 40;
     this.danoRec = 0;
     this.actual = "";
     this.opacity = 1.0;
