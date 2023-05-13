@@ -8,6 +8,7 @@ class generate {
     this.opacityMoster = 1.0;
     this.velocidadText = 2;
     this.recibir = false;
+    //objetos de monstruos
     this.monsters = {
       monstruo1: {
         vit: 50,
@@ -43,7 +44,7 @@ class generate {
         x: 600,
         y: 10,
         dialog: [
-          "  detente animal",
+          " detente animal",
           "no te lo permitire miserable",
           "tienes que ayudarme ",
           "hay algo raro",
@@ -104,6 +105,7 @@ class generate {
   set dagno(param) {
     this.stats.vit -= param * this.stats.fuerza;
   }
+  //generar monstruos
   generateMonster(monster) {
     if (this.recibir) {
       this.ctx.fillStyle = "red";

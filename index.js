@@ -30,7 +30,7 @@ class Over extends generate {
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
-    this.scene = 3;
+    this.scene = 1;
     this.textIndex = 0;
     this.text = "";
     this.dialog = 0;
@@ -124,28 +124,38 @@ class Over extends generate {
         this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
         this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
         this.personaje.stats.poderes.map((e) => {
-          this.ctx.fillStyle = "white";
-          this.ctx.fillText(
-            `${e["nombre"]}`,
-            e["posicionX"],
-            e["posicionY"]
-          );
           this.ctx.fillStyle = e["color"];
-          this.ctx.fillRect(e["posicionCanX"] , e["posicionY"] - 20 ,e["width"],e["height"])
-          this.ctx.strokeRect(e["posicionCanX"] , e["posicionY"] - 20 ,e["width"],e["height"])
+          this.ctx.fillRect(
+            e["posicionCanX"],
+            e["posicionY"] - 20,
+            e["width"],
+            e["height"]
+          );
+          this.ctx.strokeRect(
+            e["posicionCanX"],
+            e["posicionY"] - 20,
+            e["width"],
+            e["height"]
+          );
+          this.ctx.fillStyle = "white";
+          this.ctx.fillText(`${e["nombre"]}`, e["posicionX"], e["posicionY"]);
           this.canvas.addEventListener("mousemove", (event) => {
             var rect = this.canvas.getBoundingClientRect();
             var x = event.clientX - rect.left;
             var y = event.clientY - rect.top;
-            if (x > e["posicionCanX"] + 230&& x < e["posicionCanX"]+ e["width"] + 230 && y > 360 && y < 420 && this.magiaPanel == true) {
+            if (
+              x > e["minX"] &&
+              x < e["maxX"] &&
+              y > e["minY"] &&
+              y < e["maxY"] &&
+              this.magiaPanel == true
+            ) {
               e["color"] = "red";
               this.canvas.style.cursor = "pointer";
-            } 
-            else{
+            } else {
               e["color"] = "blue";
-              
             }
-          })
+          });
         });
       }
     }
