@@ -1,6 +1,8 @@
 class Over extends generate {
   constructor(params, obj) {
     super();
+    this.canvas = params.canvas;
+    this.ctx = params.ctx;
     this.niveles = [
       {
         src: "Real-Monster-PNG-Clipart.png",
@@ -19,14 +21,13 @@ class Over extends generate {
         name: "monstruo3",
       },
     ];
-    this.personaje = new Character();
+    this.personaje = new Character(this.ctx, this.canvas);
     this.statsPersonaje = this.personaje.stdist;
     this.activeBlade = false;
     this.bladeX = 30;
     this.bladeY = 40;
     this.gameActive = false;
-    this.canvas = params.canvas;
-    this.ctx = params.ctx;
+    this.magicAnimation = null;
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
@@ -41,8 +42,13 @@ class Over extends generate {
     this.currentFrame = 4;
     this.width = 100;
     this.tempAtaque = true;
+    this.pot = 0;
+    this.temMagia = 0;
+    this.temMagiaFinal = 0;
   }
+  
   vitAnimation(param) {
+  
     if (param) {
       this.width -= Math.floor((this.dagnoReal / 100) * 100);
     }
@@ -51,9 +57,7 @@ class Over extends generate {
     }
     this.ctx.fillStyle = "red";
     this.ctx.globalAlpha = this.opacityMoster;
-
     this.ctx.strokeRect(80, 30, 100, 10);
-
     this.ctx.fillRect(80, 30, this.width, 10);
   }
   atackAnimation() {
@@ -62,6 +66,7 @@ class Over extends generate {
       this.opacityMoster -= 0.01;
       this.ctx.filter = "hue-rotate(90deg)";
     }
+    
     if (this.opacityMoster <= 0) this.opacityMoster = 0;
     if (this.activeBlade == true) {
       let image = new Image();
@@ -74,7 +79,9 @@ class Over extends generate {
       }
       // Dibujar el fotograma actual
       var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
+      
       image.onload = () => {
+      
         this.ctx.drawImage(
           image,
           frameX,
@@ -90,10 +97,9 @@ class Over extends generate {
       image.src = "a1.png";
       this.currentFrame += 1;
     }
+    this.p = 0;
   }
-
-  drawButton() {
-    if (this.gameActive == true) {
+  menu(){
       this.ctx.fillStyle = this.colorAtaque;
       this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
       this.ctx.strokeRect(40, this.canvas.height - 50 - 20, 100, 30);
@@ -109,6 +115,7 @@ class Over extends generate {
       this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
       this.ctx.fillStyle = "black";
       this.ctx.font = "15px Arial";
+      if(this.magiaPanel == false){
       this.ctx.fillText(
         `HP:${this.statsPersonaje.maxvit}/${this.statsPersonaje.vit}`,
         175,
@@ -119,6 +126,24 @@ class Over extends generate {
         175,
         canvas.height - 20
       );
+      }
+      
+  }
+  drawButton() {
+    if(this.magicAnimation != null) {
+      this.magicAnimation();
+      this.temMagia++;
+      this.opacityMoster = 0;
+      if(this.temMagia > this.temMagiaFinal){
+        this.temMagia = 0;
+        this.temMagiaFinal = 0;
+        this.magicAnimation = null
+        this.opacityMoster = 1;
+      }
+    }
+    this.pot = 0;
+    if (this.gameActive == true) {
+      this.menu();
       if (this.magiaPanel == true) {
         this.ctx.fillStyle = "blue";
         this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
@@ -139,6 +164,7 @@ class Over extends generate {
           );
           this.ctx.fillStyle = "white";
           this.ctx.fillText(`${e["nombre"]}`, e["posicionX"], e["posicionY"]);
+          
           this.canvas.addEventListener("mousemove", (event) => {
             var rect = this.canvas.getBoundingClientRect();
             var x = event.clientX - rect.left;
@@ -155,8 +181,43 @@ class Over extends generate {
             } else {
               e["color"] = "blue";
             }
-          });
+          }); 
+          this.canvas.addEventListener("mousedown", (event) => {
+          var rect = this.canvas.getBoundingClientRect();
+          var x = event.clientX - rect.left;
+          var y = event.clientY - rect.top;
+          if (
+            x > e["minX"] &&
+            x < e["maxX"] &&
+            y > e["minY"] &&
+            y < e["maxY"] &&
+            this.magiaPanel == true
+          ) {
+          if(this.pot < 1){
+            this.ataqueTemp = false;
+            this.magicAnimation = e.Animation;
+            this.temMagiaFinal = e.timeAnimation;
+          setTimeout(() => {
+              this.vit = e["poder"] * this.statsPersonaje.poderMagico;
+              this.vitAnimation(true);
+              this.activeBlade = false;
+              this.currentFrame = 0;
+              this.magiaPanel = false;
+              this.personaje.pp = e["pp"];
+              this.temMagiaFinal = e.timeAnimation;
+          }, 300);
+            this.temporizador();
+            this.drawButton()
+            this.pot++
+          
+          }
+           
+          } else {
+            e["color"] = "blue";
+          }
+        })
         });
+       
       }
     }
   }
@@ -181,6 +242,7 @@ class Over extends generate {
             this.niveles[this.scene].name
           );
         } else if (this.scene == 3) {
+        
           this.drawMonster(
             this.niveles[this.scene].src,
             this.niveles[this.scene].name
@@ -190,7 +252,9 @@ class Over extends generate {
           this.gameActive = true;
           this.imageBackX = 0;
           this.imageBackY = 0;
+          
           this.atackAnimation();
+          
         }
       };
       requestAnimationFrame(a);

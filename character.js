@@ -1,5 +1,9 @@
 class Character {
-  constructor() {
+  constructor(ctx,canvas) {
+    this.ctx = ctx;
+    this.canvas = canvas
+    this.p = 0;
+    this.opacity = 1;
     this.stats = {
       maxvit: 100,
       vit: 100,
@@ -11,6 +15,7 @@ class Character {
         {
           nombre: "Fuego",
           poder: 4,
+          pp:2,
           color: "blue",
           posicionX: 160,
           posicionY: 195,
@@ -21,10 +26,18 @@ class Character {
           posicionCanX: 139,
           width: 40,
           height: 30,
+          timeAnimation:100,
+          
+          Animation:()=>{
+            this.ctx.fillStyle = "blue"
+          
+            this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+          }
         },
         {
           nombre: "Hielo",
           poder: 7,
+          pp:4,
           color: "blue",
           posicionX: 200,
           posicionY: 195,
@@ -35,10 +48,25 @@ class Character {
           maxY: 430,
           width: 40,
           height: 30,
+          timeAnimation:100,
+          Animation:(p)=>{
+            this.ctx.fillStyle = "blue"
+            this.ctx.globalAlpha = this.opacity;
+            this.ctx.fillRect(3 + this.p, 60, 50,50)
+            this.p++;
+            if(this.p > this.stats.poderes[1].timeAnimation / 2){
+              this.opacity-=0.01;
+            }
+            else if(this.p > this.stats.poderes[1].timeAnimation){
+              this.opacity = 1
+              this.p = 0;
+            }
+          }
         },
         {
           nombre: "Cura",
           poder: 9,
+          pp:4,
           color: "blue",
           posicionX: 240,
           posicionY: 195,
@@ -49,6 +77,13 @@ class Character {
           maxY: 430,
           width: 40,
           height: 30,
+          timeAnimation:100,
+          
+          Animation:()=>{
+            this.ctx.fillStyle = "red"
+          
+            this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+          }
         },
       ],
     };
@@ -59,5 +94,8 @@ class Character {
   }
   set dagno(param) {
     this.stats.vit -= param * this.stats.fuerza;
+  }
+  set pp (param){
+    this.stats.pp -= param;
   }
 }
