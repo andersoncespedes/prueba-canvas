@@ -11,6 +11,7 @@ class Character {
       pp: 20,
       fuerza: 2,
       poderMagico: 2,
+      speed:6,
       poderes: [
         {
           nombre: "Fuego",
@@ -78,7 +79,6 @@ class Character {
           width: 40,
           height: 30,
           timeAnimation:100,
-          
           Animation:()=>{
             this.ctx.fillStyle = "red"
           

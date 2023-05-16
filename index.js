@@ -45,6 +45,10 @@ class Over extends generate {
     this.pot = 0;
     this.temMagia = 0;
     this.temMagiaFinal = 0;
+    this.term = 0;
+    this.anchoTemp = 100;
+    this.menuOpacity = 1;
+    
   }
   
   vitAnimation(param) {
@@ -98,8 +102,10 @@ class Over extends generate {
       this.currentFrame += 1;
     }
     this.p = 0;
+    
   }
   menu(){
+      this.ctx.globalAlpha = this.menuOpacity;
       this.ctx.fillStyle = this.colorAtaque;
       this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
       this.ctx.strokeRect(40, this.canvas.height - 50 - 20, 100, 30);
@@ -123,9 +129,19 @@ class Over extends generate {
       );
       this.ctx.fillText(
         `PP:${this.statsPersonaje.maxpp}/${this.statsPersonaje.pp}`,
-        175,
-        canvas.height - 20
+        167,
+        canvas.height - 25
       );
+      this.ctx.strokeRect(140,canvas.height - 15, 100, 10);
+      this.ctx.fillStyle = "blue"
+      this.ctx.fillRect(140,canvas.height - 15, Math.floor( this.anchoTemp), 10);
+      /*
+      this.ctx.fillText(
+        `Temp:${this.statsPersonaje.pp }/${this.term > 0  ? Math.floor(this.term): 400 }`,
+        167,
+        canvas.height - 5
+      );
+      */
       }
       
   }
@@ -141,6 +157,7 @@ class Over extends generate {
         this.opacityMoster = 1;
       }
     }
+   this.gameOver()
     this.pot = 0;
     if (this.gameActive == true) {
       this.menu();
@@ -197,6 +214,8 @@ class Over extends generate {
             this.ataqueTemp = false;
             this.magicAnimation = e.Animation;
             this.temMagiaFinal = e.timeAnimation;
+            this.term = 400;
+            this.anchoTemp = 0;
           setTimeout(() => {
               this.vit = e["poder"] * this.statsPersonaje.poderMagico;
               this.vitAnimation(true);
@@ -263,9 +282,23 @@ class Over extends generate {
     requestAnimationFrame(a);
   }
   temporizador() {
-    setTimeout(() => {
+    let temp3 = 1
+    let intervalID = setInterval((ev) => {
+    let temp = .1* this.statsPersonaje.speed
+    let temp2 = 0.025* this.statsPersonaje.speed
+    if(this.term > 0){
+       this.term -= temp;
+       if(this.term <= 0){
+        this.term = 0
+       }
+       this.anchoTemp += temp2 ;
+    }
+    else{
       this.tempAtaque = true;
-    }, 4000);
+  clearInterval(intervalID);
+    }
+    }, temp3);
+    
   }
   actions() {
     this.canvas.addEventListener("mousedown", (event) => {
@@ -282,6 +315,8 @@ class Over extends generate {
         ) {
           this.activeBlade = true;
           this.ataqueTemp = false;
+          this.term = 400; 
+          this.anchoTemp = 0;     
           setTimeout(() => {
             this.vit = 3;
             this.vitAnimation(true);

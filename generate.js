@@ -81,8 +81,8 @@ class generate {
         },
       },
       monstruo3: {
-        vit: 50,
-        vitMax: 50,
+        vit: 100,
+        vitMax: 100,
         active: false,
         width: 120,
         height: 120,
@@ -149,14 +149,29 @@ class generate {
     let a = param * this.monsters[this.actual].fuerza;
     this.danoRec = Math.floor((a / this.monsters[this.actual].vitMax) * 100);
   }
+  gameOver(){
+    if (this.personaje.stdist["vit"] <= 0){
+      this.menuOpacity -= .01;
+      setTimeout(() => {
+        this.opacityMoster -= .01
+      },2000)
+      this.personaje.stdist["vit"] = 0;
+      if(this.menuOpacity <= 0){
+        this.menuOpacity = 0;
+      }
+    }
+  }
   drawMonster(param, monster) {
     if (this.monsters[monster].active == false) {
       this.termo -= 0.1;
     }
-    if (this.termo < 0) {
+    if(this.term == 0){
+      this.termo = 10;
+    }
+    if (this.termo < 0 && this.term > 0) {
       this.recibir = true;
       setTimeout(() => {
-        this.personaje.dagno = 3;
+        this.personaje.dagno = 40;
         this.recibir = false;
         this.opacity = 1;
       }, 100);
