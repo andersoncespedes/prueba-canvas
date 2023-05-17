@@ -1,4 +1,5 @@
 class Over extends generate {
+  "use strict"
   constructor(params, obj) {
     super();
     this.canvas = params.canvas;
@@ -228,15 +229,12 @@ class Over extends generate {
             this.temporizador();
             this.drawButton()
             this.pot++
-          
           }
-           
           } else {
             e["color"] = "blue";
           }
         })
         });
-       
       }
     }
   }

@@ -7,6 +7,7 @@ class generate {
     this.dagnoAnimation = 1;
     this.opacityMoster = 1.0;
     this.velocidadText = 2;
+    this.gameOverOpacity = 0;
     this.recibir = false;
     //objetos de monstruos
     this.monsters = {
@@ -86,7 +87,7 @@ class generate {
         active: false,
         width: 120,
         height: 120,
-        fuerza: 3,
+        fuerza: 300,
         x: 83,
         y: 20,
         dialog: [],
@@ -145,17 +146,18 @@ class generate {
     return this.danoRec;
   }
   set vit(param) {
-    this.monsters[this.actual].vit -= param * this.monsters[this.actual].fuerza;
-    let a = param * this.monsters[this.actual].fuerza;
+    this.monsters[this.actual].vit -= param * this.personaje.stdist.fuerza;
+    let a = param * this.personaje.stdist.fuerza;
     this.danoRec = Math.floor((a / this.monsters[this.actual].vitMax) * 100);
   }
   gameOver(){
     if (this.personaje.stdist["vit"] <= 0){
-      this.menuOpacity -= .01;
+      this.menuOpacity -= .1;
       setTimeout(() => {
-        this.opacityMoster -= .01
-      },2000)
+        this.opacityMoster -= .1;
+      },100)
       this.personaje.stdist["vit"] = 0;
+      
       if(this.menuOpacity <= 0){
         this.menuOpacity = 0;
       }
@@ -171,7 +173,7 @@ class generate {
     if (this.termo < 0 && this.term > 0) {
       this.recibir = true;
       setTimeout(() => {
-        this.personaje.dagno = 40;
+        this.personaje.dagno = 3 * this.monsters[monster].fuerza;
         this.recibir = false;
         this.opacity = 1;
       }, 100);

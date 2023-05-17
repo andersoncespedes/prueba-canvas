@@ -93,7 +93,7 @@ class Character {
     return this.stats;
   }
   set dagno(param) {
-    this.stats.vit -= param * this.stats.fuerza;
+    this.stats.vit -= param ;
   }
   set pp (param){
     this.stats.pp -= param;
