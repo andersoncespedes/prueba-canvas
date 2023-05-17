@@ -135,7 +135,7 @@ class Over extends generate {
       );
       this.ctx.strokeRect(140,canvas.height - 15, 100, 10);
       this.ctx.fillStyle = "blue"
-      this.ctx.fillRect(140,canvas.height - 15, Math.floor( this.anchoTemp), 10);
+      this.ctx.fillRect(140,canvas.height - 15, Math.floor(this.anchoTemp), 10);
       /*
       this.ctx.fillText(
         `Temp:${this.statsPersonaje.pp }/${this.term > 0  ? Math.floor(this.term): 400 }`,
