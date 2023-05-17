@@ -122,6 +122,7 @@ class Over extends generate {
       this.ctx.fillStyle = "black";
       this.ctx.font = "15px Arial";
       if(this.magiaPanel == false){
+      
       this.ctx.fillText(
         `HP:${this.statsPersonaje.maxvit}/${this.statsPersonaje.vit}`,
         175,

@@ -19,7 +19,7 @@ class Character {
         {
           nombre: "Fuego",
           poder: 4,
-          pp:2,
+          pp:10,
           color: "blue",
           posicionX: 160,
           posicionY: 195,
