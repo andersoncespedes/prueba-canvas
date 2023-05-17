@@ -87,7 +87,7 @@ class generate {
         active: false,
         width: 120,
         height: 120,
-        fuerza: 300,
+        fuerza: 2,
         x: 83,
         y: 20,
         dialog: [],

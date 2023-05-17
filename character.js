@@ -4,6 +4,9 @@ class Character {
     this.canvas = canvas
     this.p = 0;
     this.opacity = 1;
+    this.currentFrame = 0;
+    this.currentFrameY = 0;
+    this.animationActivaded = true;
     this.stats = {
       maxvit: 100,
       vit: 100,
@@ -27,12 +30,48 @@ class Character {
           posicionCanX: 139,
           width: 40,
           height: 30,
-          timeAnimation:100,
+          timeAnimation:11,
           
-          Animation:()=>{
-            this.ctx.fillStyle = "blue"
-          
-            this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+          Animation:(p)=>{
+            let x = p;
+            let frameWidth = 190 ; // ancho de cada fotograma en píxeles
+            let frameHeight = 180; // alto de cada fotograma en píxeles
+            let totalFrames = 5; // número total de fotogramas en la animación
+            let animationSpeed = 100; //
+            
+            if (this.currentFrame > totalFrames) {
+              this.currentFrame = 0; 
+              this.currentFrameY += 1;
+              // Reiniciar la animación al llegar al último fotograma
+            }
+            if(this.currentFrameY > 1){
+              this.currentFrameY = 0;
+            }
+            console.log(this.currentFrame)
+            let frameY = frameHeight * this.currentFrameY;
+            // Dibujar el fotograma actual
+            var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
+            
+            let image = new Image();
+            this.ctx.globalAlpha = 1;
+            image.onload = () => {
+  
+              this.ctx.drawImage(
+                image,
+                frameX,
+                frameY,
+                frameWidth,
+                frameHeight,
+                50,
+                -10,
+                frameWidth ,
+                frameHeight
+              );
+            }
+              
+            
+            this.currentFrame++;
+            image.src = "kisspng-sprite-fire-animaatio-gamemaker-studio-5b2785946597b5.8792635815293167564161.png";
           }
         },
         {
