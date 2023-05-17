@@ -224,7 +224,7 @@ class Over extends generate {
               this.magiaPanel = false;
               this.personaje.pp = e["pp"];
               this.temMagiaFinal = e.timeAnimation;
-          }, 300);
+          }, e.timeAnimation * 20);
             this.temporizador();
             this.drawButton()
             this.pot++
@@ -309,8 +309,8 @@ class Over extends generate {
         if (
           x > 100 &&
           x < 350 &&
-          y > 360 &&
-          y < 450 &&
+          y > 370 &&
+          y < 410 &&
           this.magiaPanel != true
         ) {
           this.activeBlade = true;
@@ -327,7 +327,7 @@ class Over extends generate {
         } else if (
           x > 100 &&
           x < 330 &&
-          y > 430 &&
+          y > 420 &&
           y < 520 &&
           this.magiaPanel != true
         ) {
@@ -339,13 +339,13 @@ class Over extends generate {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
-      if (x > 100 && x < 330 && y > 360 && y < 420 && this.magiaPanel != true) {
+      if (x > 100 && x < 330 && y > 360 && y < 410 && this.magiaPanel != true) {
         this.colorAtaque = "red";
         this.canvas.style.cursor = "pointer";
       } else if (
         x > 100 &&
         x < 330 &&
-        y > 430 &&
+        y > 420 &&
         y < 520 &&
         this.magiaPanel != true
       ) {

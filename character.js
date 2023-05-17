@@ -30,7 +30,7 @@ class Character {
           posicionCanX: 139,
           width: 40,
           height: 30,
-          timeAnimation:11,
+          timeAnimation:50,
           
           Animation:(p)=>{
             let x = p;
@@ -41,12 +41,9 @@ class Character {
             
             if (this.currentFrame > totalFrames) {
               this.currentFrame = 0; 
-              this.currentFrameY += 1;
               // Reiniciar la animación al llegar al último fotograma
             }
-            if(this.currentFrameY > 1){
-              this.currentFrameY = 0;
-            }
+      
             console.log(this.currentFrame)
             let frameY = frameHeight * this.currentFrameY;
             // Dibujar el fotograma actual
