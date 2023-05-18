@@ -88,8 +88,8 @@ class generate {
         width: 120,
         height: 120,
         fuerza: 2,
-        x: 83,
-        y: 20,
+        x: 93,
+        y: 50,
         dialog: [],
         scene: () => {
           if (this.opacity < 0.5) {

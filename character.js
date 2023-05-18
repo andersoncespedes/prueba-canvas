@@ -14,7 +14,7 @@ class Character {
       pp: 40,
       fuerza: 2,
       poderMagico: 2,
-      speed:2,
+      speed:20,
       poderes: [
         {
           nombre: "Fuego",
@@ -88,21 +88,24 @@ class Character {
           maxY: 430,
           width: 40,
           height: 30,
-          timeAnimation:100,
+          timeAnimation:80,
           frame:0,
           Animation:(p)=>{
    
-            let frameWidth = 85 ; // ancho de cada fotograma en píxeles
-            let frameHeight = 750; // alto de cada fotograma en píxeles
-            let totalFrames = 6; // número total de fotogramas en la animación
+            let frameWidth = 192 ; // ancho de cada fotograma en píxeles
+            let frameHeight = 490; // alto de cada fotograma en píxeles
+            let totalFrames = 4; 
             let animationSpeed = 100; //
-            let totalFramesY = 5;
-            if (this.currentFrame > totalFrames+5) {
+            let totalFramesY = 4;
+            if (this.currentFrame > totalFrames) {
               this.currentFrame = 0;
               this.stats.poderes[1].frame++;
               // Reiniciar la animación al llegar al último fotograma
             }
-            
+            if(this.stats.poderes[1].frame > 5){
+              this.currentFrameY+=1;
+              this.stats.poderes[1].frame=0;
+            }
             if(this.currentFrameY > totalFramesY){
               this.currentFrameY = 0;
             }
@@ -121,13 +124,13 @@ class Character {
                 frameWidth,
                 frameHeight,
                 60,
-                -245,
+                -310,
                 frameWidth ,
                 frameHeight 
               );
             }
             this.currentFrame++
-            image.src = "kisspng-sprite-ice-animation-fizzy-drinks-sprite-5ac9893803b8b2.4149458515231573040153.png";
+            image.src = "explosion.png";
           }
         },
         {
