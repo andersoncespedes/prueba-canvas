@@ -14,7 +14,7 @@ class Character {
       pp: 20,
       fuerza: 2,
       poderMagico: 2,
-      speed:2,
+      speed:20,
       poderes: [
         {
           nombre: "Fuego",
@@ -30,8 +30,7 @@ class Character {
           posicionCanX: 139,
           width: 40,
           height: 30,
-          timeAnimation:50,
-          
+          timeAnimation:30,
           Animation:(p)=>{
             let x = p;
             let frameWidth = 190 ; // ancho de cada fotograma en píxeles
