@@ -86,17 +86,43 @@ class Character {
           height: 30,
           timeAnimation:100,
           Animation:(p)=>{
-            this.ctx.fillStyle = "blue"
-            this.ctx.globalAlpha = this.opacity;
-            this.ctx.fillRect(3 + this.p, 60, 50,50)
-            this.p++;
-            if(this.p > this.stats.poderes[1].timeAnimation / 2){
-              this.opacity-=0.01;
+   
+            let frameWidth = 180 ; // ancho de cada fotograma en píxeles
+            let frameHeight = 490; // alto de cada fotograma en píxeles
+            let totalFrames = 6; // número total de fotogramas en la animación
+            let animationSpeed = 100; //
+            let totalFramesY = 5;
+            if (this.currentFrame > totalFrames) {
+              this.currentFrame = 0;
+              this.currentFrameY++
+              // Reiniciar la animación al llegar al último fotograma
             }
-            else if(this.p > this.stats.poderes[1].timeAnimation){
-              this.opacity = 1
-              this.p = 0;
+            if(this.currentFrameY > totalFramesY){
+              this.currentFrameY = 0;
             }
+                        console.log(this.currentFrame)
+            let frameY = frameHeight * this.currentFrameY;
+            // Dibujar el fotograma actual
+            var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
+            
+            let image = new Image();
+            this.ctx.globalAlpha = 1;
+            image.onload = () => {
+  
+              this.ctx.drawImage(
+                image,
+                frameX,
+                frameY,
+                frameWidth,
+                frameHeight,
+                60,
+                -155,
+                frameWidth /2,
+                frameHeight /2
+              );
+            }
+            this.currentFrame++
+            image.src = "kisspng-sprite-ice-animation-fizzy-drinks-sprite-5ac9893803b8b2.4149458515231573040153.png";
           }
         },
         {
@@ -116,7 +142,6 @@ class Character {
           timeAnimation:100,
           Animation:()=>{
             this.ctx.fillStyle = "red"
-          
             this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
           }
         },

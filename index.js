@@ -272,11 +272,7 @@ class Over extends generate {
             this.niveles[this.scene].name
           );
         } else if (this.scene == 3) {
-          let s = new Audio('music/BattleTheme.mp3');
-          s.volume = 0.5;
-          s.loop = true;
-          s.playbackRate = 2;
-				  s.play();
+         
 				  
           this.drawMonster(
             this.niveles[this.scene].src,
@@ -379,6 +375,10 @@ class Over extends generate {
     this.tempAtaque = param;
   }
   init() {
+    let s = new Audio('music/BattleTheme.mp3');
+    s.volume = 1;
+    s.loop = true;
+    s.play();
     this.draw();
     this.actions();
   }
