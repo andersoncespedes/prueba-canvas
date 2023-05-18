@@ -11,10 +11,10 @@ class Character {
       maxvit: 100,
       vit: 100,
       maxpp: 20,
-      pp: 20,
+      pp: 40,
       fuerza: 2,
       poderMagico: 2,
-      speed:20,
+      speed:2,
       poderes: [
         {
           nombre: "Fuego",
@@ -31,23 +31,27 @@ class Character {
           width: 40,
           height: 30,
           timeAnimation:30,
+          frame:0,
           Animation:(p)=>{
             let x = p;
             let frameWidth = 190 ; // ancho de cada fotograma en píxeles
             let frameHeight = 180; // alto de cada fotograma en píxeles
-            let totalFrames = 5; // número total de fotogramas en la animación
+            let totalFrames = 3; // número total de fotogramas en la animación
             let animationSpeed = 100; //
-            
+            if (this.stats.poderes[0].frame > 7) {
+              this.currentFrame = 0; 
+              this.stats.poderes[0].frame = 0;
+              // Reiniciar la animación al llegar al último fotograma
+            }
             if (this.currentFrame > totalFrames) {
               this.currentFrame = 0; 
+              this.stats.poderes[0].frame++;
               // Reiniciar la animación al llegar al último fotograma
             }
       
-            console.log(this.currentFrame)
             let frameY = frameHeight * this.currentFrameY;
             // Dibujar el fotograma actual
-            var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
-            
+            var frameX = this.stats.poderes[0].frame * frameWidth; // posición x del fotograma en la imagen del sprite
             let image = new Image();
             this.ctx.globalAlpha = 1;
             image.onload = () => {
@@ -85,25 +89,26 @@ class Character {
           width: 40,
           height: 30,
           timeAnimation:100,
+          frame:0,
           Animation:(p)=>{
    
-            let frameWidth = 180 ; // ancho de cada fotograma en píxeles
-            let frameHeight = 490; // alto de cada fotograma en píxeles
+            let frameWidth = 85 ; // ancho de cada fotograma en píxeles
+            let frameHeight = 750; // alto de cada fotograma en píxeles
             let totalFrames = 6; // número total de fotogramas en la animación
             let animationSpeed = 100; //
             let totalFramesY = 5;
-            if (this.currentFrame > totalFrames) {
+            if (this.currentFrame > totalFrames+5) {
               this.currentFrame = 0;
-              this.currentFrameY++
+              this.stats.poderes[1].frame++;
               // Reiniciar la animación al llegar al último fotograma
             }
+            
             if(this.currentFrameY > totalFramesY){
               this.currentFrameY = 0;
             }
-                        console.log(this.currentFrame)
             let frameY = frameHeight * this.currentFrameY;
             // Dibujar el fotograma actual
-            var frameX = this.currentFrame * frameWidth; // posición x del fotograma en la imagen del sprite
+            var frameX = this.stats.poderes[1].frame * frameWidth; // posición x del fotograma en la imagen del sprite
             
             let image = new Image();
             this.ctx.globalAlpha = 1;
@@ -116,9 +121,9 @@ class Character {
                 frameWidth,
                 frameHeight,
                 60,
-                -155,
-                frameWidth /2,
-                frameHeight /2
+                -245,
+                frameWidth ,
+                frameHeight 
               );
             }
             this.currentFrame++
