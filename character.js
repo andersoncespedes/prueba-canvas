@@ -10,7 +10,7 @@ class Character {
     this.stats = {
       maxvit: 100,
       vit: 100,
-      maxpp: 20,
+      maxpp: 40,
       pp: 40,
       fuerza: 2,
       poderMagico: 2,
@@ -38,7 +38,10 @@ class Character {
             let frameHeight = 180; // alto de cada fotograma en píxeles
             let totalFrames = 3; // número total de fotogramas en la animación
             let animationSpeed = 100; //
-            if (this.stats.poderes[0].frame > 7) {
+            if(this.currentFrameY > 0){
+              this.currentFrameY = 0;
+            }
+            if (this.stats.poderes[0].frame > 8) {
               this.currentFrame = 0; 
               this.stats.poderes[0].frame = 0;
               // Reiniciar la animación al llegar al último fotograma
@@ -75,7 +78,7 @@ class Character {
           }
         },
         {
-          nombre: "Hielo",
+          nombre: "Explo",
           poder: 7,
           pp:4,
           color: "blue",
@@ -88,7 +91,7 @@ class Character {
           maxY: 430,
           width: 40,
           height: 30,
-          timeAnimation:80,
+          timeAnimation:60,
           frame:0,
           Animation:(p)=>{
    
@@ -96,7 +99,7 @@ class Character {
             let frameHeight = 490; // alto de cada fotograma en píxeles
             let totalFrames = 4; 
             let animationSpeed = 100; //
-            let totalFramesY = 4;
+            let totalFramesY = 5;
             if (this.currentFrame > totalFrames) {
               this.currentFrame = 0;
               this.stats.poderes[1].frame++;
@@ -106,7 +109,7 @@ class Character {
               this.currentFrameY+=1;
               this.stats.poderes[1].frame=0;
             }
-            if(this.currentFrameY > totalFramesY){
+            if(this.currentFrameY > 1){
               this.currentFrameY = 0;
             }
             let frameY = frameHeight * this.currentFrameY;
@@ -129,6 +132,7 @@ class Character {
                 frameHeight 
               );
             }
+           
             this.currentFrame++
             image.src = "explosion.png";
           }
