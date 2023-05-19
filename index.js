@@ -107,18 +107,18 @@ class Over extends generate {
   menu(){
       this.ctx.globalAlpha = this.menuOpacity;
       this.ctx.fillStyle = this.colorAtaque;
-      this.ctx.fillRect(40, this.canvas.height - 50 - 20, 100, 30);
-      this.ctx.strokeRect(40, this.canvas.height - 50 - 20, 100, 30);
+      this.ctx.fillRect(40, this.canvas.height - 70 - 20, 100, 30);
+      this.ctx.strokeRect(40, this.canvas.height - 70 - 20, 100, 30);
       this.ctx.fillStyle = this.colorMagia;
-      this.ctx.fillRect(40, this.canvas.height - 20 - 20, 100, 30);
-      this.ctx.strokeRect(40, this.canvas.height - 20 - 20, 100, 30);
+      this.ctx.fillRect(40, this.canvas.height - 40 - 20, 100, 30);
+      this.ctx.strokeRect(40, this.canvas.height - 40 - 20, 100, 30);
       this.ctx.font = "20px Arial";
       this.ctx.fillStyle = "white";
       this.ctx.textAlign = "center";
-      this.ctx.fillText("Ataque", 83, canvas.height - 45);
-      this.ctx.fillText("Magia", 83, canvas.height - 16);
-      this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
-      this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
+      this.ctx.fillText("Ataque", 83, canvas.height - 65);
+      this.ctx.fillText("Magia", 83, canvas.height - 36);
+      this.ctx.fillRect(130, this.canvas.height - 70 - 20, 170, 80);
+      this.ctx.strokeRect(130, this.canvas.height - 70 - 20, 170, 80);
       this.ctx.fillStyle = "black";
       this.ctx.font = "15px Arial";
       if(this.magiaPanel == false){
@@ -126,16 +126,16 @@ class Over extends generate {
       this.ctx.fillText(
         `HP:${this.statsPersonaje.maxvit}/${this.statsPersonaje.vit}`,
         175,
-        canvas.height - 45
+        canvas.height - 65
       );
       this.ctx.fillText(
         `PP:${this.statsPersonaje.maxpp}/${this.statsPersonaje.pp}`,
         167,
-        canvas.height - 25
+        canvas.height - 45
       );
-      this.ctx.strokeRect(140,canvas.height - 15, 100, 10);
+      this.ctx.strokeRect(140,canvas.height - 35, 100, 10);
       this.ctx.fillStyle = "blue"
-      this.ctx.fillRect(140,canvas.height - 15, Math.floor(this.anchoTemp), 10);
+      this.ctx.fillRect(140,canvas.height - 35, Math.floor(this.anchoTemp), 10);
       /*
       this.ctx.fillText(
         `Temp:${this.statsPersonaje.pp }/${this.term > 0  ? Math.floor(this.term): 400 }`,
@@ -164,8 +164,8 @@ class Over extends generate {
       this.menu();
       if (this.magiaPanel == true) {
         this.ctx.fillStyle = "blue";
-        this.ctx.fillRect(130, this.canvas.height - 50 - 20, 170, 80);
-        this.ctx.strokeRect(130, this.canvas.height - 50 - 20, 170, 80);
+        this.ctx.fillRect(130, this.canvas.height - 70 - 20, 170, 80);
+        this.ctx.strokeRect(130, this.canvas.height - 70 - 20, 170, 80);
         this.personaje.stats.poderes.map((e) => {
           this.ctx.fillStyle = e["color"];
           this.ctx.fillRect(
@@ -319,10 +319,7 @@ class Over extends generate {
       var y = event.clientY - rect.top;
       if (this.tempAtaque == true) {
         if (
-          x > 100 &&
-          x < 350 &&
-          y > 370 &&
-          y < 410 
+          x > 100 && x < 330 && y > 310 && y < 375
         ) {
           this.activeBlade = true;
           this.ataqueTemp = false;
@@ -339,8 +336,8 @@ class Over extends generate {
         } else if (
           x > 100 &&
           x < 330 &&
-          y > 420 &&
-          y < 520 
+          y > 385 &&
+          y < 450 
         ) {
           this.magiaPanel = !this.magiaPanel;
         }
@@ -350,14 +347,14 @@ class Over extends generate {
       var rect = this.canvas.getBoundingClientRect();
       var x = event.clientX - rect.left;
       var y = event.clientY - rect.top;
-      if (x > 100 && x < 330 && y > 360 && y < 410) {
+      if (x > 100 && x < 330 && y > 310 && y < 375) {
         this.colorAtaque = "red";
         this.canvas.style.cursor = "pointer";
       } else if (
         x > 100 &&
         x < 330 &&
-        y > 420 &&
-        y < 520 
+        y > 385 &&
+        y < 450 
       ) {
         this.colorMagia = "red";
         this.canvas.style.cursor = "pointer";
