@@ -14,7 +14,7 @@ class Character {
       pp: 40,
       fuerza: 2,
       poderMagico: 2,
-      speed:20,
+      speed:5,
       poderes: [
         {
           nombre: "Fuego",

@@ -61,8 +61,8 @@ class Over extends generate {
     }
     this.ctx.fillStyle = "red";
     this.ctx.globalAlpha = this.opacityMoster;
-    this.ctx.strokeRect(90, 60, 100, 10);
-    this.ctx.fillRect(90, 60, this.width, 10);
+    this.ctx.strokeRect(90, 40, 100, 10);
+    this.ctx.fillRect(90, 40, this.width, 10);
   }
   atackAnimation() {
     this.vitAnimation();

@@ -89,8 +89,17 @@ class generate {
         height: 120,
         fuerza: 2,
         x: 93,
-        y: 50,
+        y: 30,
         dialog: [],
+        poderes:[{
+          nombre:"abismo",
+          poder:5,
+        },
+        {
+          nombre:"destruccion",
+          poder:20,
+        }
+      ],
         scene: () => {
           if (this.opacity < 0.5) {
             this.opacity = 1;
@@ -150,6 +159,9 @@ class generate {
     let a = param * this.personaje.stdist.fuerza;
     this.danoRec = Math.floor((a / this.monsters[this.actual].vitMax) * 100);
   }
+  randomNumber(param){
+    return Math.floor((Math.random() * 2));
+  }
   gameOver(){
     if (this.personaje.stdist["vit"] <= 0){
       this.menuOpacity -= .1;
@@ -173,7 +185,7 @@ class generate {
     if (this.termo < 0 && this.term > 0) {
       this.recibir = true;
       setTimeout(() => {
-        this.personaje.dagno = 3 * this.monsters[monster].fuerza;
+        this.personaje.dagno = this.monsters[monster].poderes[this.randomNumber("1")].poder * this.monsters[monster].fuerza;
         this.recibir = false;
         this.opacity = 1;
       }, 100);
