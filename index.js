@@ -48,7 +48,7 @@ class Over extends generate {
     this.term = 0;
     this.anchoTemp = 100;
     this.menuOpacity = 1;
-    
+    this.monstruoTurn = "";
   }
   
   vitAnimation(param) {
@@ -121,7 +121,19 @@ class Over extends generate {
       this.ctx.strokeRect(130, this.canvas.height - 70 - 20, 170, 80);
       this.ctx.fillStyle = "black";
       this.ctx.font = "15px Arial";
+      if(this.PowerRandom != null){
+        this.ctx.fillStyle = "blue";
+        this.ctx.fillRect(100, this.canvas.height - 230, 100, 20);
+        this.ctx.strokeRect(100, this.canvas.height - 230, 100, 20);
+        this.ctx.fillStyle = "white";
+        this.ctx.textAlign = "center";
+        this.ctx.fillText(this.monsters[this.monstruoTurn ].poderes[this.PowerRandom].nombre, 150, this.canvas.height - 215);
+        setTimeout(() => {
+          this.PowerRandom = null;
+        },1500)
+      }
       if(this.magiaPanel == false){
+        this.ctx.fillStyle = "black";
       
       this.ctx.fillText(
         `HP:${this.statsPersonaje.maxvit}/${this.statsPersonaje.vit}`,
@@ -222,7 +234,12 @@ class Over extends generate {
             
           setTimeout(() => {
               if(this.statsPersonaje.pp - e["pp"] > 0){
-                this.vit = e["poder"] * this.statsPersonaje.poderMagico;
+                if(e.tipo == "ataque"){
+                  this.vit = e["poder"] * this.statsPersonaje.poderMagico;
+                }
+                else if(e.tipo == "cura"){
+                  e.declara();
+                }
                 this.vitAnimation(true);
                 this.activeBlade = false;
                 this.currentFrame = 0;

@@ -8,6 +8,7 @@ class generate {
     this.opacityMoster = 1.0;
     this.velocidadText = 2;
     this.gameOverOpacity = 0;
+    this.PowerRandom = null;
     this.recibir = false;
     //objetos de monstruos
     this.monsters = {
@@ -92,12 +93,16 @@ class generate {
         y: 30,
         dialog: [],
         poderes:[{
-          nombre:"abismo",
+          nombre:"Abismo",
           poder:5,
         },
         {
-          nombre:"destruccion",
+          nombre:"Destruccion",
           poder:20,
+        },
+        {
+          nombre:"Quemadura",
+          poder:40,
         }
       ],
         scene: () => {
@@ -115,8 +120,28 @@ class generate {
   set dagno(param) {
     this.stats.vit -= param * this.stats.fuerza;
   }
+  set poderNom(a){
+    this.PowerRandom = a;
+  }
   //generar monstruos
   generateMonster(monster) {
+    if (this.monsters[monster].active == false) {
+      this.termo -= 0.1;
+    }
+    if(this.term == 0){
+      this.termo = 10;
+    }
+    if (this.termo < 0 && this.term > 0) {
+      this.poderNom =  this.randomNumber(this.monsters[monster].poderes.length);
+      this.recibir = true;
+      setTimeout(() => {
+        this.personaje.dagno = this.monsters[monster].poderes[this.PowerRandom].poder * this.monsters[monster].fuerza;
+        this.recibir = false;
+        this.opacity = 1;
+      }, 100);
+      this.termo = 20;
+    }
+
     if (this.recibir) {
       this.ctx.fillStyle = "red";
       this.ctx.globalAlpha = this.dagnoAnimation;
@@ -160,7 +185,7 @@ class generate {
     this.danoRec = Math.floor((a / this.monsters[this.actual].vitMax) * 100);
   }
   randomNumber(param){
-    return Math.floor((Math.random() * 2));
+    return Math.floor((Math.random() * param));
   }
   gameOver(){
     if (this.personaje.stdist["vit"] <= 0){
@@ -176,22 +201,7 @@ class generate {
     }
   }
   drawMonster(param, monster) {
-    if (this.monsters[monster].active == false) {
-      this.termo -= 0.1;
-    }
-    if(this.term == 0){
-      this.termo = 10;
-    }
-    if (this.termo < 0 && this.term > 0) {
-      this.recibir = true;
-      setTimeout(() => {
-        this.personaje.dagno = this.monsters[monster].poderes[this.randomNumber("1")].poder * this.monsters[monster].fuerza;
-        this.recibir = false;
-        this.opacity = 1;
-      }, 100);
-      this.termo = 20;
-    }
-
+    this.monstruoTurn = monster
     let image = new Image();
     let count = 0;
 

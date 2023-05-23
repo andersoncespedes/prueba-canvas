@@ -21,6 +21,7 @@ class Character {
           poder: 4,
           pp:10,
           color: "blue",
+          tipo:"ataque",
           posicionX: 160,
           posicionY: 175,
           minX: 340,
@@ -85,6 +86,7 @@ class Character {
           posicionX: 200,
           posicionY: 175,
           posicionCanX: 180,
+          tipo:"ataque",
           minX: 452,
           maxX: 562,
           minY: 320,
@@ -141,6 +143,7 @@ class Character {
           nombre: "Cura",
           poder: 9,
           pp:4,
+          tipo:"cura",
           color: "blue",
           posicionX: 240,
           posicionY: 175,
@@ -151,9 +154,18 @@ class Character {
           maxY: 390,
           width: 40,
           height: 30,
-          timeAnimation:100,
+          timeAnimation:20,
+          declara:() => {
+          if(this.stats.vit + 10 * this.stats.poderMagico <= this.stats.maxvit){
+            this.stats.vit += 10 * this.stats.poderMagico;
+          }
+          else{
+            this.stats.vit = this.stats.maxvit;
+          
+          }
+          },
           Animation:()=>{
-            this.ctx.fillStyle = "red"
+            this.ctx.fillStyle = "green"
             this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
           }
         },
