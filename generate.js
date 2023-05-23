@@ -98,11 +98,11 @@ class generate {
         },
         {
           nombre:"Destruccion",
-          poder:20,
+          poder:10,
         },
         {
           nombre:"Quemadura",
-          poder:40,
+          poder:15,
         }
       ],
         scene: () => {

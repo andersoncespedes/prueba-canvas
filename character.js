@@ -157,7 +157,7 @@ class Character {
           timeAnimation:20,
           declara:() => {
           if(this.stats.vit + 10 * this.stats.poderMagico <= this.stats.maxvit){
-            this.stats.vit += 10 * this.stats.poderMagico;
+            this.stats.vit += this.stats.poderes[2].poder * this.stats.poderMagico;
           }
           else{
             this.stats.vit = this.stats.maxvit;

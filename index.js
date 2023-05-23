@@ -236,11 +236,12 @@ class Over extends generate {
               if(this.statsPersonaje.pp - e["pp"] > 0){
                 if(e.tipo == "ataque"){
                   this.vit = e["poder"] * this.statsPersonaje.poderMagico;
+                  this.vitAnimation(true);
                 }
                 else if(e.tipo == "cura"){
                   e.declara();
                 }
-                this.vitAnimation(true);
+                
                 this.activeBlade = false;
                 this.currentFrame = 0;
                 this.magiaPanel = false;
