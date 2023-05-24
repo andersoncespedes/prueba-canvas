@@ -1,4 +1,4 @@
-class Over extends generate {
+class Over extends OverWorld {
   constructor(params, obj) {
     super();
     this.canvas = params.canvas;
