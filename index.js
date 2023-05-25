@@ -31,7 +31,7 @@ class Over extends OverWorld {
     this.obj = obj;
     this.imageBackX = 0;
     this.imageBackY = 0;
-    this.scene = 3;
+    this.scene = 4;
     this.textIndex = 0;
     this.text = "";
     this.dialog = 0;
@@ -68,6 +68,7 @@ class Over extends OverWorld {
     this.vitAnimation();
     if (this.vit <= 0) {
       this.opacityMoster -= 0.01;
+      this.scene++;
       this.ctx.filter = "hue-rotate(90deg)";
     }
     
@@ -284,14 +285,12 @@ class Over extends OverWorld {
           image.width + this.imageBackX,
           image.height + this.imageBackY
         );
-        if (this.scene != 3) {
+        if (this.scene < 3) {
           this.drawMonster(
             this.niveles[this.scene].src,
             this.niveles[this.scene].name
           );
         } else if (this.scene == 3) {
-         
-				  
           this.drawMonster(
             this.niveles[this.scene].src,
             this.niveles[this.scene].name
@@ -301,9 +300,10 @@ class Over extends OverWorld {
           this.gameActive = true;
           this.imageBackX = 0;
           this.imageBackY = 0;
-          
           this.atackAnimation();
-          
+        }
+        else if(this.scene == 4){
+          this.drawWorld()
         }
       };
       requestAnimationFrame(a);
