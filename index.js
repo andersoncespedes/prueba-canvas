@@ -291,6 +291,7 @@ class Over extends OverWorld {
             this.niveles[this.scene].name
           );
         } else if (this.scene == 3) {
+          this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
           this.drawMonster(
             this.niveles[this.scene].src,
             this.niveles[this.scene].name
@@ -303,6 +304,8 @@ class Over extends OverWorld {
           this.atackAnimation();
         }
         else if(this.scene == 4){
+          this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+
           this.drawWorld()
         }
       };

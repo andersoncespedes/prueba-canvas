@@ -4,16 +4,19 @@ class OverWorld extends generate{
         this.maxaa = 0;
         this.frameActual = 0;
         this.tempFrameActual = 0;
-        this.posicionWorldX = -3500;
+        this.posicionWorldX = -3700;
         this.posicionWorldY = -2400;
         this.remanen = 16;
+        this.speed = .1;
+        this.heldDirection = "stand";
+        this.pos = "stand"
         this.movActive = false;
         this.updateMov = {
-            up:["posicionWorldX", 1],
-            down:["posicionWorldX", -1],
-            right:["posicionWorldY", 1],
-            left:["posicionWorldY", -1]
-            
+            ArrowUp: 3,
+            ArrowDown: -3,
+            ArrowRight: -3,
+            ArrowLeft:3
+
         }
         this.spriteMov = {
             stand:[[0,0]],
@@ -34,45 +37,75 @@ class OverWorld extends generate{
     set animationSpriteAct(param){
         this.animactionSelect = param;
     }
-    set posicionY(param){
-        if(param == "up" && this.movActive == true){
-            this.posicionWorldX+=.1;
+    get posit(){
+        return this.pos
+    }
+    get direccion(){
+        return this.heldDirection
+    }
+    posicionY(param){
+        if(this.posit == "Up" || this.posit == "Down" ){
+          this.posicionWorldX+= this.updateMov[this.direccion] || 0;  
+            if(this.pos == "Up"){
+            this.animactionSelect = "walkUp"
+          }
+          else{
+            this.animactionSelect = "walkDown"
+
+          }
+          
         }
-        else if(param == "down" && this.movActive == true){
-            this.posicionWorldX-=.1;
+        else{
+            this.posicionWorldY+= this.updateMov[this.direccion] || 0;  
+            if(this.posit == "Left"){
+                this.animactionSelect = "walkLeft"
+              }
+              else{
+                this.animactionSelect = "walkDown"
+    
+              }
+          
+
         }
     }
-    set posicionX(param){
-        if(param == "left"){
-            this.posicionWorldY+=.1;
-        }
-        else if(param == "down"){
-            this.posicionWorldX-=.1;
-        }
+    set casting(param){
+        this.heldDirection = param;
     }
     movSprites(){
-        document.addEventListener("keyup", () => {
+        this.posicionY()
+        document.addEventListener("keyup", (ev) => {
             this.movActive = false;
+             this.heldDirection = ""  
         })
         document.addEventListener("keydown",(ev) => {
-            this.movActive = true;
+            this.movActive = true
+            this.casting = ev.key;
+            this.pos = ev.key.replace("Arrow", "");
+            /*this.movActive = true;
             this.remanen--;
-            if(ev.key == "ArrowDown" && this.remanen > 0){
+            let evento = null;
+            if(ev != null){
+                evento = ev.key
+            }
+            if(evento == "ArrowDown"){
                 this.posicionY = "down"
                 this.animationSpriteAct = "walkDown" 
+                setTimeout(() => {
+                    this.movActive = false;
+                }, 3000)
             }
-            else if(ev.key == "ArrowUp" ){
+            else if(evento == "ArrowUp" ){
                 this.posicionY = "up"
                 this.animationSpriteAct = "walkUp" 
             }
-            else if(ev.key == "ArrowLeft" ){
+            else if(evento == "ArrowLeft" ){
                 this.animationSpriteAct = "walkLeft" 
                 this.posicionX = "left"
-            }
+            }*/
         });
     }
     drawSprite(){
-
+        
         this.keyButtons = this.spriteMov[this.movActive == true ? this.animactionSelect : "stand" + this.animactionSelect];
         this.tempFrameActual++;
         if(this.tempFrameActual > 6){
@@ -90,7 +123,9 @@ class OverWorld extends generate{
         let image = new Image();
         image.onload = () => {
             this.movSprites();
-            this.ctx.drawImage(image, frameWidth,frameHeight,width, height,this.canvas.width / 2,this.canvas.height / 2,60,60)
+             this.ctx.drawImage(image, frameWidth,frameHeight,width, height,this.canvas.width / 2,this.canvas.height / 2,60,60)   
+            
+            
         }
         image.src = "tifa000.png"
     }
