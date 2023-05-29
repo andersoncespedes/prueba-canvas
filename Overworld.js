@@ -26,8 +26,9 @@ class OverWorld extends generate{
             walkDown:[[0,0],  [0,2]],
             standwalkDown:[[0,1]],
             walkLeft:[[0,6],[0,7]],
-            standwalkLeft:[[0,7]]
-            
+            standwalkLeft:[[0,7]],
+            walkRight:[[4,5],[4,6]],
+            standwalkRight:[[4,7]]
         }
         this.actualMove = [0,0];
         this.animactionSelect = "walkUp" || "stand";
@@ -44,32 +45,37 @@ class OverWorld extends generate{
     get direccion(){
         return this.heldDirection
     }
-    posicionY(param){
+    SuperPosicion(){
         if(this.posit == "Up" || this.posit == "Down" ){
-            this.posicionWorldX += this.updateMov[this.direccion] || 0;  
-          if(this.pos == "Up"){
-                this.animactionSelect = "walkUp"
-              }
-              else{
-                this.animactionSelect = "walkDown"
-    
-              }
-          
+            return "posicionWorldX"
         }
         else{
-                 this.posicionWorldY+= this.updateMov[this.direccion] || 0; 
-           
-            
-            if(this.posit == "Left"){
+            return "posicionWorldY";
+        }
+    }
+    colision(param){
+        if(this.posicionWorldX  + this.updateMov[this.direccion] > -3500 && this.pos == "Up" ){
+            return false;
+        }
+    }
+    posicionY(param){
+        
+          if(this.pos == "Up"){
+                this.animactionSelect = "walkUp"
+               
+              }
+         else if (this.pos == "Down"){
+                this.animactionSelect = "walkDown"
+              }
+        else if(this.posit == "Left"){
                 this.animactionSelect = "walkLeft"
               }
               else{
-                this.animactionSelect = "walkDown"
-    
+                this.animactionSelect = "walkRight"
               }
-          
-
-        }
+        this[this.SuperPosicion()] += this.updateMov[this.direccion] || 0;          
+        
+        
     }
     set casting(param){
         this.heldDirection = param;
@@ -98,7 +104,7 @@ class OverWorld extends generate{
             this.frameActual = 0;
         }
         let frameWidth = 16.1 * this.actualMove[this.frameActual][1]; // ancho de cada fotograma en píxeles
-        let frameHeight = 20 * this.actualMove[this.frameActual][0]; // alto de cada fotograma en píxeles
+        let frameHeight = 18.3 * this.actualMove[this.frameActual][0]; // alto de cada fotograma en píxeles
         let totalFrames = 3; // número tot
         let width = 14;
         let height = 23.5
