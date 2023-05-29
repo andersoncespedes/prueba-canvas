@@ -291,7 +291,7 @@ class Over extends OverWorld {
             this.niveles[this.scene].name
           );
         } else if (this.scene == 3) {
-          this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+
           this.drawMonster(
             this.niveles[this.scene].src,
             this.niveles[this.scene].name
@@ -392,6 +392,27 @@ class Over extends OverWorld {
   set ataqueTemp(param) {
     this.tempAtaque = param;
   }
+  movimientoCharacter(){
+    if(this.movRes == true && this.remanen > 0){
+        this.remanen--;
+        
+    }else{
+        this.movActive = false;  
+        this.heldDirection = ""  
+    }
+    
+    if(this.direccion == ""){
+    document.addEventListener("keyup", (ev) => {
+        this.movRes = true;
+    })
+        document.addEventListener("keydown",(ev) => {
+            this.movActive = true;
+            this.remanen = 25
+            this.casting = ev.key;
+            this.pos = ev.key.replace("Arrow", "");
+        });
+    }
+  }
   init() {
     let s = new Audio('music/BattleTheme.mp3');
     s.volume = 1;
@@ -399,6 +420,7 @@ class Over extends OverWorld {
     s.play();
     this.draw();
     this.actions();
+    this.movimientoCharacter()
   }
 }
 let canvas = document.getElementById("canvas");

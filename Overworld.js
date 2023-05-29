@@ -6,8 +6,9 @@ class OverWorld extends generate{
         this.tempFrameActual = 0;
         this.posicionWorldX = -3700;
         this.posicionWorldY = -2400;
-        this.remanen = 16;
+        this.remanen = 25;
         this.speed = .1;
+        this.movRes = false;
         this.heldDirection = "stand";
         this.pos = "stand"
         this.movActive = false;
@@ -45,18 +46,20 @@ class OverWorld extends generate{
     }
     posicionY(param){
         if(this.posit == "Up" || this.posit == "Down" ){
-          this.posicionWorldX+= this.updateMov[this.direccion] || 0;  
-            if(this.pos == "Up"){
-            this.animactionSelect = "walkUp"
-          }
-          else{
-            this.animactionSelect = "walkDown"
-
-          }
+            this.posicionWorldX += this.updateMov[this.direccion] || 0;  
+          if(this.pos == "Up"){
+                this.animactionSelect = "walkUp"
+              }
+              else{
+                this.animactionSelect = "walkDown"
+    
+              }
           
         }
         else{
-            this.posicionWorldY+= this.updateMov[this.direccion] || 0;  
+                 this.posicionWorldY+= this.updateMov[this.direccion] || 0; 
+           
+            
             if(this.posit == "Left"){
                 this.animactionSelect = "walkLeft"
               }
@@ -73,36 +76,15 @@ class OverWorld extends generate{
     }
     movSprites(){
         this.posicionY()
-        document.addEventListener("keyup", (ev) => {
-            this.movActive = false;
-             this.heldDirection = ""  
-        })
-        document.addEventListener("keydown",(ev) => {
-            this.movActive = true
-            this.casting = ev.key;
-            this.pos = ev.key.replace("Arrow", "");
-            /*this.movActive = true;
+        if(this.movRes == true && this.remanen > 0){
             this.remanen--;
-            let evento = null;
-            if(ev != null){
-                evento = ev.key
-            }
-            if(evento == "ArrowDown"){
-                this.posicionY = "down"
-                this.animationSpriteAct = "walkDown" 
-                setTimeout(() => {
-                    this.movActive = false;
-                }, 3000)
-            }
-            else if(evento == "ArrowUp" ){
-                this.posicionY = "up"
-                this.animationSpriteAct = "walkUp" 
-            }
-            else if(evento == "ArrowLeft" ){
-                this.animationSpriteAct = "walkLeft" 
-                this.posicionX = "left"
-            }*/
-        });
+            
+        }else{
+            this.movActive = false;  
+            this.heldDirection = ""  
+        }
+        
+       
     }
     drawSprite(){
         
@@ -124,8 +106,6 @@ class OverWorld extends generate{
         image.onload = () => {
             this.movSprites();
              this.ctx.drawImage(image, frameWidth,frameHeight,width, height,this.canvas.width / 2,this.canvas.height / 2,60,60)   
-            
-            
         }
         image.src = "tifa000.png"
     }
