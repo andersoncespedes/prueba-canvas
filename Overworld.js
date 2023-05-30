@@ -4,13 +4,39 @@ class OverWorld extends generate{
         this.maxaa = 0;
         this.frameActual = 0;
         this.tempFrameActual = 0;
-        this.posicionWorldX = -3700;
-        this.posicionWorldY = -2400;
-        this.remanen = 25;
+        this.posicionWorldY = -3700;
+        this.posicionWorldX = -2400;
+        this.remanen = 30;
+        this.transiction = 20;
         this.speed = .1;
         this.movRes = false;
         this.heldDirection = "stand";
-        this.pos = "stand"
+        this.pos = "stand";
+        this.triggerIndex = 0;
+        this.colisiones = 
+        [
+            {
+                XM:-2100,
+                Xm:-2200,
+                YM:-3550,
+                Ym:-3626,
+                destino:{y:-3720,x:-1010}
+            },
+            {
+                XM:-3114,
+                Xm:-3250,
+                YM:-3414,
+                Ym:-3520,
+                destino:{y:-3720,x:-1510}
+            },
+            {
+                XM:-980,
+                Xm:-1040,
+                YM:-3760,
+                Ym:-3850,
+                destino:{y:-3680,x:-2150}
+            },
+        ]
         this.movActive = false;
         this.updateMov = {
             ArrowUp: 3,
@@ -47,16 +73,42 @@ class OverWorld extends generate{
     }
     SuperPosicion(){
         if(this.posit == "Up" || this.posit == "Down" ){
-            return "posicionWorldX"
+            return "posicionWorldY"
         }
         else{
-            return "posicionWorldY";
+            return "posicionWorldX";
         }
     }
+    transacion(){
+            this.transiction = 0;
+            this.ctx.fillStyle = "black";
+            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            
+            setTimeout(() => {
+                this.transiction = 1;
+                
+            },400)
+    }
+    set triggerInd(par){
+        this.triggerIndex+= par;
+    }
+    get posicionArray(){
+        return this.triggerIndex;
+    }
     colision(param){
-        if(this.posicionWorldX  + this.updateMov[this.direccion] > -3500 && this.pos == "Up" ){
-            return false;
+        if(this.triggerIndex >= this.colisiones.length){
+            this.triggerIndex = 0;
         }
+        if(this.posicionWorldY > this.colisiones[this.posicionArray].Ym && 
+        this.posicionWorldX < this.colisiones[this.posicionArray].XM && 
+        this.posicionWorldY < this.colisiones[this.posicionArray].YM && 
+        this.posicionWorldX > this.colisiones[this.posicionArray].Xm){
+            this.posicionWorldY = this.colisiones[this.posicionArray].destino.y;
+            this.posicionWorldX = this.colisiones[this.posicionArray].destino.x;
+            this.transacion();
+        }
+        
+        this.triggerInd = 1;
     }
     posicionY(param){
         
@@ -84,7 +136,7 @@ class OverWorld extends generate{
         this.posicionY()
         if(this.movRes == true && this.remanen > 0){
             this.remanen--;
-            
+            this.colision()
         }else{
             this.movActive = false;  
             this.heldDirection = ""  
@@ -116,12 +168,14 @@ class OverWorld extends generate{
         image.src = "tifa000.png"
     }
     drawWorld(world){
-        
+        if(this.transiction > 0){
         let image = new Image();
         image.onload = () => {
-            this.ctx.drawImage(image, this.posicionWorldY,this.posicionWorldX,4200, 4200)
+            this.ctx.drawImage(image, this.posicionWorldX,this.posicionWorldY,4200, 4200)
             this.drawSprite()
         }
         image.src = "ff6gba_map25-Jidoor.png"
+        }
+        
     }
 }

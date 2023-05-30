@@ -305,7 +305,7 @@ class Over extends OverWorld {
         }
         else if(this.scene == 4){
           this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
-
+          this.opacity =1;
           this.drawWorld()
         }
       };
@@ -407,7 +407,7 @@ class Over extends OverWorld {
     })
         document.addEventListener("keydown",(ev) => {
             this.movActive = true;
-            this.remanen = 25
+            this.remanen = 30
             this.casting = ev.key;
             this.pos = ev.key.replace("Arrow", "");
         });
