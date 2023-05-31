@@ -52,14 +52,12 @@ class Character {
               this.stats.poderes[0].frame++;
               // Reiniciar la animación al llegar al último fotograma
             }
-      
             let frameY = frameHeight * this.currentFrameY;
             // Dibujar el fotograma actual
             var frameX = this.stats.poderes[0].frame * frameWidth; // posición x del fotograma en la imagen del sprite
             let image = new Image();
             this.ctx.globalAlpha = 1;
             image.onload = () => {
-  
               this.ctx.drawImage(
                 image,
                 frameX,
@@ -72,8 +70,6 @@ class Character {
                 frameHeight
               );
             }
-              
-            
             this.currentFrame++;
             image.src = "kisspng-sprite-fire-animaatio-gamemaker-studio-5b2785946597b5.8792635815293167564161.png";
           }
@@ -96,7 +92,6 @@ class Character {
           timeAnimation:60,
           frame:0,
           Animation:(p)=>{
-   
             let frameWidth = 192 ; // ancho de cada fotograma en píxeles
             let frameHeight = 490; // alto de cada fotograma en píxeles
             let totalFrames = 4; 

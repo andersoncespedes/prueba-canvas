@@ -16,6 +16,7 @@ class OverWorld extends generate{
         this.colisiones = 
         [
             {
+            //TIENDA
                 XM:-2100,
                 Xm:-2200,
                 YM:-3550,
@@ -23,6 +24,7 @@ class OverWorld extends generate{
                 destino:{y:-3720,x:-1010}
             },
             {
+            //GRANJA
                 XM:-3114,
                 Xm:-3250,
                 YM:-3414,
@@ -30,11 +32,34 @@ class OverWorld extends generate{
                 destino:{y:-3720,x:-1510}
             },
             {
+            //TIENDA SALIDA
                 XM:-980,
                 Xm:-1040,
                 YM:-3760,
                 Ym:-3850,
                 destino:{y:-3680,x:-2150}
+            },
+            {
+            //GRANJA SALIDA
+                XM:-1500,
+                Xm:-1800,
+                YM:-3760,
+                Ym:-3950,
+                destino:{y:-3570,x:-3250}
+            },
+            {
+                XM:-2700,
+                Xm:-2780,
+                YM:-2182,
+                Ym:-2200,
+                destino:{y:-1638,x:-3055}
+            },
+            {
+                XM:-3000,
+                Xm:-3100,
+                YM:-1682,
+                Ym:-1700,
+                destino:{y:-2222,x:-2730}
             },
         ]
         this.movActive = false;
@@ -43,7 +68,6 @@ class OverWorld extends generate{
             ArrowDown: -3,
             ArrowRight: -3,
             ArrowLeft:3
-
         }
         this.spriteMov = {
             stand:[[0,0]],
@@ -81,12 +105,9 @@ class OverWorld extends generate{
     }
     transacion(){
             this.transiction = 0;
-            this.ctx.globalAlpha = 1;
-            this.ctx.fillStyle = "black";
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.globalAlpha = 1;   
             setTimeout(() => {
                 this.transiction = 1;
-                
             },400)
     }
     set triggerInd(par){
@@ -107,11 +128,10 @@ class OverWorld extends generate{
             this.posicionWorldX = this.colisiones[this.posicionArray].destino.x;
             this.transacion();
         }
-        
         this.triggerInd = 1;
     }
     posicionY(param){
-        
+        console.log(`X: ${this.posicionWorldX} Y: ${this.posicionWorldY}`);
           if(this.pos == "Up"){
                 this.animactionSelect = "walkUp"
                
@@ -126,8 +146,6 @@ class OverWorld extends generate{
                 this.animactionSelect = "walkRight"
               }
         this[this.SuperPosicion()] += this.updateMov[this.direccion] || 0;          
-        
-        
     }
     set casting(param){
         this.heldDirection = param;
@@ -141,8 +159,6 @@ class OverWorld extends generate{
             this.movActive = false;  
             this.heldDirection = ""  
         }
-        
-       
     }
     drawSprite(){
         
@@ -176,6 +192,5 @@ class OverWorld extends generate{
         }
         image.src = "ff6gba_map25-Jidoor.png"
         }
-        
     }
 }

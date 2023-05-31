@@ -304,7 +304,8 @@ class Over extends OverWorld {
           this.atackAnimation();
         }
         else if(this.scene == 4){
-          this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height)
+          this.ctx.fillStyle = "black";
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
           this.opacity =1;
           this.menuOpacity = 1;
           this.opacityMoster = 1;
